@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import jfxtras.scene.control.CalendarPicker?>
 
@@ -14,7 +13,6 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="208.0">
                <children>
                   <ListView layoutX="27.0" layoutY="31.0" prefHeight="298.0" prefWidth="152.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button layoutX="38.0" layoutY="137.0" mnemonicParsing="false" text="Button" />
                </children></AnchorPane>
             <SplitPane dividerPositions="0.6879194630872483" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
               <items>
@@ -27,8 +25,6 @@
                         <Button layoutX="374.0" layoutY="51.0" mnemonicParsing="false" text="Delete" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                         <Button layoutX="342.0" layoutY="55.0" mnemonicParsing="false" text="Edit" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="71.0" />
                         <Button layoutX="291.0" layoutY="55.0" mnemonicParsing="false" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="118.0" />
-                        <TextField layoutX="127.0" layoutY="14.0" prefHeight="25.0" prefWidth="308.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="127.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                        <TextField editable="false" layoutY="5.0" />
                      </children></AnchorPane>
               </items>
             </SplitPane>
