@@ -12,72 +12,55 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application 
 {
-
-    private Stage primaryStage;
     private BorderPane rootLayout;
-
-    @Override
-    public void start(Stage primaryStage)
-    {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Organizer");
-
-        initRootLayout();
-
-        showPersonOverview();
-    }
-
-    /**
-     * Initializes the root layout.
-     */
-    @FXML private void handleButtonAction() {
-        // Button was clicked, do something...
-        System.out.println("button clicked");
-    }
-    public void initRootLayout()
-    {
-        try {
-            // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-        }
-    }
-
-    /**
-     * Shows the person overview inside the root layout.
-     */
-    public void showPersonOverview() 
-    {
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("MainView.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
-        } catch (IOException e) {
-        }
-    }
-
-    /**
-     * Returns the main stage.
-     * @return
-     */
+    
+    private Stage primaryStage;
     public Stage getPrimaryStage() 
     {
         return primaryStage;
     }
-
-    public static void main(String[] args) 
+    @Override
+    public void start(Stage primaryStage)
     {
-        launch(args);
+        this.primaryStage = primaryStage;
+        this.primaryStage.setMinWidth(600);
+        this.primaryStage.setMinHeight(500);
+        this.primaryStage.setTitle("Organizer");
+        initRootLayout();
+        showMainView();
     }
+
+    public void initRootLayout()
+    {
+        try 
+        {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
+            rootLayout = (BorderPane) loader.load();
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) 
+        {
+        	System.out.println(e.getMessage());
+        }
+    }
+
+    public void showMainView() 
+    {
+        try 
+        {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("MainView.fxml"));
+            AnchorPane personOverview = (AnchorPane) loader.load();
+
+            rootLayout.setCenter(personOverview);
+            
+        } catch (IOException e) 
+        {
+        	System.out.println(e.getMessage());
+        }
+    }
+
 }
