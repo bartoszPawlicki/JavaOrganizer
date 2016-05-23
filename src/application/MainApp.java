@@ -62,5 +62,4 @@ public class MainApp extends Application
         	System.out.println(e.getMessage());
         }
     }
-
 }
