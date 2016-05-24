@@ -3,6 +3,8 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -27,9 +29,20 @@ public class MainViewController implements Initializable
 	@FXML
 	private TextArea textAreaDescription;
 	
+	@FXML
+	private ComboBox<String> comboboxFiltre;
+	
+	private ObservableList<String> listComboboxItems;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
+		listComboboxItems = FXCollections.observableArrayList();
+		listComboboxItems.add("All events");
+		listComboboxItems.add("This month");
+		listComboboxItems.add("This week");
+		listComboboxItems.add("Today");
+		comboboxFiltre.setItems(listComboboxItems);
 		
 	}
 	

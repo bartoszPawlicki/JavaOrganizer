@@ -17,7 +17,7 @@
           <AnchorPane maxWidth="300.0" minWidth="150.0">
                <children>
                   <ScrollPane layoutX="-13.0" layoutY="36.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
-                  <ComboBox layoutX="23.0" layoutY="6.0" promptText="All events" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <ComboBox fx:id="comboboxFiltre" layoutX="23.0" layoutY="6.0" promptText="All events" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Add new event " AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                </children></AnchorPane>
             <SplitPane dividerPositions="0.550251256281407" minHeight="300.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
