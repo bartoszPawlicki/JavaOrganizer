@@ -3,6 +3,8 @@ package application;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -14,7 +16,22 @@ public class MainApp extends Application
     private BorderPane rootLayout;
     
     private Stage primaryStage;
-    public Stage getPrimaryStage() 
+    
+    private ObservableList<CallendarEntry> callendarEntriesObservableList = FXCollections.observableArrayList();
+    
+    public ObservableList<CallendarEntry> getCallendarEntriesObservableList()
+	{
+		return callendarEntriesObservableList;
+	}
+
+    
+    public MainApp()
+    {
+    	callendarEntriesObservableList.add(new CallendarEntry("nazwa wydarzenia 1", "zadupie", "Wydarzenie na zadupiu"));
+    	callendarEntriesObservableList.add(new CallendarEntry("Otwarcie parasola w dupie", "Palac prezydencki", "Wielkie otwarcie"));
+    }
+    
+	public Stage getPrimaryStage() 
     {
         return primaryStage;
     }
@@ -56,10 +73,16 @@ public class MainApp extends Application
 
             rootLayout.setCenter(personOverview);
             
+            MainViewController controller = loader.getController();
+            controller.setMainApp(this);
+            
         } catch (IOException e) 
         {
         	System.out.println(e.getMessage());
         	e.printStackTrace();
         }
+    }
+    public static void main(String[] args) {
+        launch(args);
     }
 }

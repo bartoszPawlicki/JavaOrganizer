@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 
 public class MainViewController implements Initializable
 {
+	private MainApp mainApp;
+	
 	@FXML
 	private Button saveButton;
 	
@@ -34,6 +36,20 @@ public class MainViewController implements Initializable
 	
 	private ObservableList<String> listComboboxItems;
 	
+	@FXML
+	private TableView<CallendarEntry> tableView;
+	
+	@FXML
+	private TableColumn<CallendarEntry, String> tableColumns;
+	
+	public void setMainApp(MainApp mainApp) 
+	{
+        this.mainApp = mainApp;
+
+        // Add observable list data to the table
+        tableView.setItems(mainApp.getCallendarEntriesObservableList());
+    }
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
@@ -43,6 +59,8 @@ public class MainViewController implements Initializable
 		listComboboxItems.add("This week");
 		listComboboxItems.add("Today");
 		comboboxFiltre.setItems(listComboboxItems);
+		
+		tableColumns.setCellValueFactory(cellData -> cellData.getValue().getTitle());
 		
 	}
 	
