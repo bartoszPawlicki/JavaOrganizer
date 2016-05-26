@@ -18,40 +18,51 @@ public class CallendarEntry
 		this.description = new SimpleStringProperty (description);
 	}
 	
-	public StringProperty getTitle() 
+	public String getTitle() 
 	{
-		return title;
-	}
+        return title.get();
+    }
 
+    public void setTitle(String title) 
+    {
+        this.title.set(title);
+    }
 
-	public StringProperty getVenue() 
+    public StringProperty titleProperty() 
+    {
+        return title;
+    }
+    
+    public String getVenue() 
 	{
-		return venue;
-	}
+        return venue.get();
+    }
 
+    public void setVenue(String venue) 
+    {
+        this.venue.set(venue);
+    }
 
-	public StringProperty getDescription() 
+    public StringProperty venueProperty() 
+    {
+        return venue;
+    }
+    
+    public String getDescription() 
 	{
-		return description;
-	}
+        return description.get();
+    }
 
+    public void setDescription(String description) 
+    {
+        this.description.set(description);
+    }
 
-	public void setTitle(StringProperty title) 
-	{
-		this.title = title;
-	}
-
-
-	public void setVenue(StringProperty venue) 
-	{
-		this.venue = venue;
-	}
-
-
-	public void setDescription(StringProperty description) 
-	{
-		this.description = description;
-	}
+    public StringProperty descriptionProperty() 
+    {
+        return description;
+    }
+	
        
 }
 

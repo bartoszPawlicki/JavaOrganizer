@@ -3,6 +3,7 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -60,7 +61,13 @@ public class MainViewController implements Initializable
 		listComboboxItems.add("Today");
 		comboboxFiltre.setItems(listComboboxItems);
 		
-		tableColumns.setCellValueFactory(cellData -> cellData.getValue().getTitle());
+		
+		
+		tableColumns.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+	
+		//tableColumnItemClick_onAction(null);
+		tableView.getSelectionModel().selectedItemProperty().addListener(
+	            (observable, oldValue, newValue) -> tableColumnItemClick_onAction(newValue));
 		
 	}
 	
@@ -89,6 +96,23 @@ public class MainViewController implements Initializable
 	public void deleteButton_onAction()
 	{
 		System.out.println("DeleteButton action");
+	}
+	
+	public void tableColumnItemClick_onAction(CallendarEntry callendarEntry)
+	{
+		System.out.println("Item in table chosen");
+		if (callendarEntry != null) {
+	        // Fill the labels with info from the person object.
+	        textFieldTitle.setText(callendarEntry.getTitle());
+	        textFieldVenue.setText(callendarEntry.getVenue());
+	        textAreaDescription.setText(callendarEntry.getDescription());
+
+	    } 
+	    
+	    else
+	    {
+	        //set labels to empty strings
+	    }	
 	}
 
 }
