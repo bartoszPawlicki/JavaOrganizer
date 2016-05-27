@@ -33,7 +33,7 @@
                         </TableView>
                      </content></ScrollPane>
                   <ComboBox fx:id="comboboxFiltre" layoutX="23.0" layoutY="6.0" promptText="All events" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Add new event " AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                  <Button fx:id="addNewEventButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#addNewEventButton_onAction" text="Add new event " AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                </children></AnchorPane>
             <SplitPane dividerPositions="0.550251256281407" minHeight="300.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
               <items>
@@ -53,6 +53,7 @@
                         <TextField fx:id="textFieldTitle" editable="false" layoutX="75.0" layoutY="1.0" prefHeight="25.0" prefWidth="360.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <TextField fx:id="textFieldVenue" editable="false" layoutX="75.0" layoutY="33.0" prefHeight="25.0" prefWidth="360.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0" />
                         <TextArea fx:id="textAreaDescription" editable="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="75.0" />
+                        <Button fx:id="confrimAddingNewEventButton" layoutX="75.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#confirmAddingNewEventButton_onAction" text="Confirm adding new event" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="75.0" />
                      </children></AnchorPane>
               </items>
             </SplitPane>

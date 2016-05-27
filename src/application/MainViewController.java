@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 
 public class MainViewController implements Initializable
 {
@@ -38,10 +39,17 @@ public class MainViewController implements Initializable
 	private ObservableList<String> listComboboxItems;
 	
 	@FXML
+	private Button addNewEventButton;
+	
+	@FXML
+	private Button confrimAddingNewEventButton;
+	
+	@FXML
 	private TableView<CallendarEntry> tableView;
 	
 	@FXML
 	private TableColumn<CallendarEntry, String> tableColumns;
+	
 	
 	public void setMainApp(MainApp mainApp) 
 	{
@@ -67,7 +75,7 @@ public class MainViewController implements Initializable
 	
 		//tableColumnItemClick_onAction(null);
 		tableView.getSelectionModel().selectedItemProperty().addListener(
-	            (observable, oldValue, newValue) -> tableColumnItemClick_onAction(newValue));
+	            (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
 		
 	}
 	
@@ -98,7 +106,7 @@ public class MainViewController implements Initializable
 		System.out.println("DeleteButton action");
 	}
 	
-	public void tableColumnItemClick_onAction(CallendarEntry callendarEntry)
+	public void tableColumnItem_onAction(CallendarEntry callendarEntry)
 	{
 		System.out.println("Item in table chosen");
 		if (callendarEntry != null) {
@@ -111,8 +119,48 @@ public class MainViewController implements Initializable
 	    
 	    else
 	    {
-	        //set labels to empty strings
+	        //TO DO: set labels to empty strings
+	    	textFieldTitle.setText("");
+	        textFieldVenue.setText("");
+	        textAreaDescription.setText("");
 	    }	
+	}
+	
+	public void addNewEventButton_onAction()
+	{
+		System.out.println("AddNewEventButtonClicked");
+		tableColumnItem_onAction(null);
+		
+		textFieldTitle.setEditable(true);
+		textFieldVenue.setEditable(true);
+		textAreaDescription.setEditable(true);
+		saveButton.setVisible(false);
+		deleteButton.setVisible(false);
+		editButton.setVisible(false);
+		confrimAddingNewEventButton.setVisible(true);
+		
+	}
+	
+	public void confirmAddingNewEventButton_onAction()
+	{
+		if (textFieldTitle.getText().length()<1 || textFieldVenue.getText().length()<1 )
+		{
+			Alert alert = new Alert(AlertType.WARNING);
+	        alert.initOwner(mainApp.getPrimaryStage());
+	        alert.setTitle("Adding new event failed!");
+	        alert.setHeaderText("No title and/or venue specified");
+	        alert.setContentText("Please specify at least title and venue to add new event");
+
+	        alert.showAndWait();
+		}
+		else
+		{
+			mainApp.getCallendarEntriesObservableList().add(
+					new CallendarEntry(textFieldTitle.getText(), textFieldVenue.getText(), textAreaDescription.getText()));
+			saveButton_onAction();
+			confrimAddingNewEventButton.setVisible(false);
+		}
+		
 	}
 
 }
