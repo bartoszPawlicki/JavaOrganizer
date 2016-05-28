@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -81,15 +82,25 @@ public class MainViewController implements Initializable
 		
 	}
 	
-	public void saveButton_onAction()
+	public void changeButtonVisibilityOnSave()
 	{
-		System.out.println("SaveButton action");
 		textFieldTitle.setEditable(false);
 		textFieldVenue.setEditable(false);
 		textAreaDescription.setEditable(false);
 		saveButton.setVisible(false);
 		deleteButton.setVisible(false);
 		editButton.setVisible(true);
+	}
+	
+	public void saveButton_onAction()
+	{
+		System.out.println("SaveButton action");
+		changeButtonVisibilityOnSave();
+		
+		tableView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
+		tableView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
+		tableView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
+		
 	}
 	
 	public void editButton_onAction()
@@ -106,6 +117,17 @@ public class MainViewController implements Initializable
 	public void deleteButton_onAction()
 	{
 		System.out.println("DeleteButton action");
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Delete entry");
+		alert.setHeaderText("You are about to delete callendar entry: " + tableView.getSelectionModel().getSelectedItem().getTitle() );
+		alert.setContentText("Are you sure to delete this entry?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			mainApp.getCallendarEntriesObservableList().remove(tableView.getSelectionModel().getSelectedIndex());
+		} 
+		changeButtonVisibilityOnSave();
 	}
 	
 	public void tableColumnItem_onAction(CallendarEntry callendarEntry)
@@ -159,7 +181,7 @@ public class MainViewController implements Initializable
 		{
 			mainApp.getCallendarEntriesObservableList().add(
 					new CallendarEntry(textFieldTitle.getText(), textFieldVenue.getText(), textAreaDescription.getText()));
-			saveButton_onAction();
+			changeButtonVisibilityOnSave();
 			confrimAddingNewEventButton.setVisible(false);
 		}
 		
