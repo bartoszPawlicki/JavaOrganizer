@@ -51,6 +51,8 @@ public class MainViewController implements Initializable
 	private TableColumn<CallendarEntry, String> tableColumns;
 	
 	
+	
+	
 	public void setMainApp(MainApp mainApp) 
 	{
         this.mainApp = mainApp;
