@@ -53,10 +53,15 @@ public class MainApp extends Application
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
+            
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
+            
+            RootLayoutController controller = loader.getController();
+            controller.setMainApp(this);
+            
         } catch (IOException e) 
         {
         	System.out.println(e.getMessage());
@@ -75,6 +80,7 @@ public class MainApp extends Application
             
             MainViewController controller = loader.getController();
             controller.setMainApp(this);
+            
             
         } catch (IOException e) 
         {

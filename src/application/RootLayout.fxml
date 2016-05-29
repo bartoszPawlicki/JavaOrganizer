@@ -12,8 +12,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Save to Xml" />
-                  <MenuItem mnemonicParsing="false" text="Load from Xml" />
+              <MenuItem fx:id="menuItemFileSaveToXml" mnemonicParsing="false" onAction="#menuItemFileSaveToXml_onAction" text="Save to Xml" />
+                  <MenuItem fx:id="menuItemFileLoadFromXml" mnemonicParsing="false" onAction="#menuItemFileLoadFromXml_onAction" text="Load from Xml" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Save to Database" />
                   <MenuItem mnemonicParsing="false" text="Load from Database" />
