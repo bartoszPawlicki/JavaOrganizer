@@ -9,12 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
@@ -58,11 +56,8 @@ public class RootLayoutController implements Initializable
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file)))
 		{
 			file.createNewFile();
-			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
-			{
-				String temp = xstream.toXML(item);
-				bufferedWriter.write(temp);
-			}
+			String temp2 = xstream.toXML(mainApp.getCallendarEntriesObservableList());
+			bufferedWriter.write(temp2);
 		}
 		
 		catch (IOException e)
@@ -92,10 +87,8 @@ public class RootLayoutController implements Initializable
 		
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file)))
 		{
-			mainApp.getCallendarEntriesObservableList().clear();
-			//TO DO: wczytywanie z xml
-			
-			
+			ObservableList<CallendarEntry> tempList = (ObservableList<CallendarEntry>)xstream.fromXML(file);
+			mainApp.getCallendarEntriesObservableList().setAll(tempList);
 		}
 		
 		catch (IOException e)
