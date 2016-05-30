@@ -1,6 +1,5 @@
 package application;
 
-import java.time.LocalDate;
 import javafx.beans.property.*;
 
 public class CallendarEntry 

@@ -4,13 +4,13 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import jfxtras.scene.control.CalendarPicker;
 
 public class MainViewController implements Initializable
 {
@@ -51,8 +51,11 @@ public class MainViewController implements Initializable
 	@FXML
 	private TableColumn<CallendarEntry, String> tableColumns;
 	
+	@FXML
+	private CalendarPicker calendarPicker;
 	
-	
+	@FXML
+	private ListView<CallendarEntry> listView;
 	
 	public void setMainApp(MainApp mainApp) 
 	{
@@ -64,7 +67,11 @@ public class MainViewController implements Initializable
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
-	{
+	{		
+		calendarPicker.calendarProperty().addListener((observable) -> {
+			
+			System.out.println(calendarPicker.getCalendar().getTime());
+		        });
 		listComboboxItems = FXCollections.observableArrayList();
 		listComboboxItems.add("All events");
 		listComboboxItems.add("This month");
