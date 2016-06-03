@@ -6,7 +6,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RootLayoutController">
+<BorderPane minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -15,8 +15,8 @@
               <MenuItem fx:id="menuItemFileSaveToXml" mnemonicParsing="false" onAction="#menuItemFileSaveToXml_onAction" text="Save to Xml" />
                   <MenuItem fx:id="menuItemFileLoadFromXml" mnemonicParsing="false" onAction="#menuItemFileLoadFromXml_onAction" text="Load from Xml" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Save to Database" />
-                  <MenuItem mnemonicParsing="false" text="Load from Database" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuItemFileSaveToDataBase_onAction" text="Save to Database" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuItemFileLoadFromDataBase_onAction" text="Load from Database" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuItemFileClose" mnemonicParsing="false" onAction="#menuItemFileClose_onAction" text="Close" />
             </items>

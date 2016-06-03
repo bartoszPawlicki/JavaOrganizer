@@ -96,4 +96,24 @@ public class RootLayoutController implements Initializable
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void menuItemFileSaveToDataBase_onAction()
+	{
+		DataBaseConnection dataBaseConncetion = new DataBaseConnection(
+				"eu-cdbr-azure-west-d.cloudapp.net",
+				"bazadanychorganizer",
+				"b49f86d8da8665",
+				"3c8f720c");
+		dataBaseConncetion.SaveCallendarEntries(mainApp.getCallendarEntriesObservableList());
+	}
+	
+	public void menuItemFileLoadFromDataBase_onAction()
+	{
+		DataBaseConnection dataBaseConncetion = new DataBaseConnection(
+				"eu-cdbr-azure-west-d.cloudapp.net",
+				"bazadanychorganizer",
+				"b49f86d8da8665",
+				"3c8f720c");
+		mainApp.getCallendarEntriesObservableList().setAll(dataBaseConncetion.LoadCallendarEntries());
+	}
 }
