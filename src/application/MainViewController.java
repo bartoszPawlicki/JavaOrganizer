@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.util.Callback;
 import jfxtras.scene.control.CalendarPicker;
 
 public class MainViewController implements Initializable
@@ -49,7 +50,7 @@ public class MainViewController implements Initializable
 	private TableView<CallendarEntry> tableView;
 	
 	@FXML
-	private TableColumn<CallendarEntry, String> tableColumns;
+	private TableColumn<CallendarEntry, String> tableColumn1;
 	
 	@FXML
 	private CalendarPicker calendarPicker;
@@ -62,8 +63,12 @@ public class MainViewController implements Initializable
         this.mainApp = mainApp;
 
         // Add observable list data to the table
-        tableView.setItems(mainApp.getCallendarEntriesObservableList());
+        //tableView.setItems(mainApp.getCallendarEntriesObservableList());
+        listView.setItems(mainApp.getCallendarEntriesObservableList());
+        
     }
+	
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
@@ -81,13 +86,44 @@ public class MainViewController implements Initializable
 		
 		
 		
-		tableColumns.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-	
+		//tableColumn1.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+		
+		
+		
+
+		
 		//tableColumnItemClick_onAction(null);
-		tableView.getSelectionModel().selectedItemProperty().addListener(
-	            (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
+		//tableView.getSelectionModel().selectedItemProperty().addListener(
+	            //(observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
+		
+		listView.setCellFactory(new Callback<ListView<CallendarEntry>, 
+	            ListCell<CallendarEntry>>() {
+	                @Override 
+	                public ListCell<CallendarEntry> call(ListView<CallendarEntry> listView) {
+	                    return new TextFieldCell();
+	                }
+	            }
+		);
+		
+		listView.getSelectionModel().selectedItemProperty().addListener(
+	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
 		
 	}
+	
+	static class TextFieldCell extends ListCell<CallendarEntry> {
+        @Override
+        public void updateItem(CallendarEntry item, boolean empty) {
+            super.updateItem(item, empty);
+            Label field = new Label();
+            if (item != null) {
+                field.setText(item.getTitle());
+                
+                setGraphic(field);
+            }
+        }
+    }
+	
+	
 	
 	public void changeButtonVisibilityOnSave()
 	{
@@ -104,9 +140,22 @@ public class MainViewController implements Initializable
 		System.out.println("SaveButton action");
 		changeButtonVisibilityOnSave();
 		
-		tableView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
-		tableView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
-		tableView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
+		//tableView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
+		//tableView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
+		//tableView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
+		
+		listView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
+		listView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
+		listView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
+		
+		listView.setCellFactory(new Callback<ListView<CallendarEntry>, 
+	            ListCell<CallendarEntry>>() {
+	                @Override 
+	                public ListCell<CallendarEntry> call(ListView<CallendarEntry> listView) {
+	                    return new TextFieldCell();
+	                }
+	            }
+		);
 		
 	}
 	
@@ -126,13 +175,22 @@ public class MainViewController implements Initializable
 		System.out.println("DeleteButton action");
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Delete entry");
-		alert.setHeaderText("You are about to delete callendar entry: " + tableView.getSelectionModel().getSelectedItem().getTitle() );
+		alert.setHeaderText("You are about to delete callendar entry: " + listView.getSelectionModel().getSelectedItem().getTitle() );
 		alert.setContentText("Are you sure to delete this entry?");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
 		{
-			mainApp.getCallendarEntriesObservableList().remove(tableView.getSelectionModel().getSelectedIndex());
+			mainApp.getCallendarEntriesObservableList().remove(listView.getSelectionModel().getSelectedIndex());
+			
+			listView.setCellFactory(new Callback<ListView<CallendarEntry>, 
+		            ListCell<CallendarEntry>>() {
+		                @Override 
+		                public ListCell<CallendarEntry> call(ListView<CallendarEntry> listView) {
+		                    return new TextFieldCell();
+		                }
+		            }
+			);
 		} 
 		changeButtonVisibilityOnSave();
 	}
