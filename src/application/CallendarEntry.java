@@ -4,9 +4,9 @@ import javafx.beans.property.*;
 
 public class CallendarEntry 
 {
-	private StringProperty title;
-    private StringProperty venue;
-    private StringProperty description;
+	private final StringProperty title;
+    private final StringProperty venue;
+    private final StringProperty description;
     //private final ObjectProperty<LocalDate> date;
     
 

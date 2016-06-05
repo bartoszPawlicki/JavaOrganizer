@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class MainApp extends Application 
 {
@@ -17,7 +19,15 @@ public class MainApp extends Application
     
     private Stage primaryStage;
     
-    private ObservableList<CallendarEntry> callendarEntriesObservableList = FXCollections.observableArrayList();
+    Callback<CallendarEntry, Observable[]> extractor = new Callback<CallendarEntry, Observable[]>() {
+
+        @Override
+        public Observable[] call(CallendarEntry c) {
+            return new Observable[] {c.titleProperty(), c.venueProperty(), c.descriptionProperty()};
+        }
+    };
+    
+    private ObservableList<CallendarEntry> callendarEntriesObservableList = FXCollections.observableArrayList(extractor);
     
     public ObservableList<CallendarEntry> getCallendarEntriesObservableList()
 	{

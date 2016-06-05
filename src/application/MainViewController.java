@@ -46,11 +46,11 @@ public class MainViewController implements Initializable
 	@FXML
 	private Button confrimAddingNewEventButton;
 	
-	@FXML
-	private TableView<CallendarEntry> tableView;
+	//@FXML
+	//private TableView<CallendarEntry> tableView;
 	
-	@FXML
-	private TableColumn<CallendarEntry, String> tableColumn1;
+	//@FXML
+	//private TableColumn<CallendarEntry, String> tableColumn1;
 	
 	@FXML
 	private CalendarPicker calendarPicker;
@@ -114,16 +114,19 @@ public class MainViewController implements Initializable
         @Override
         public void updateItem(CallendarEntry item, boolean empty) {
             super.updateItem(item, empty);
-            Label field = new Label();
+            //Label field = new Label();
             if (item != null) {
-                field.setText(item.getTitle());
+                //field.setText(item.getTitle());
+                setText(item.getTitle());
+                System.out.println("List View Update" + item.getTitle());
                 
-                setGraphic(field);
+               // setGraphic(field);
+            }
+            else {
+            	setText("");
             }
         }
     }
-	
-	
 	
 	public void changeButtonVisibilityOnSave()
 	{
@@ -147,15 +150,7 @@ public class MainViewController implements Initializable
 		listView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
 		listView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
 		listView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
-		
-		listView.setCellFactory(new Callback<ListView<CallendarEntry>, 
-	            ListCell<CallendarEntry>>() {
-	                @Override 
-	                public ListCell<CallendarEntry> call(ListView<CallendarEntry> listView) {
-	                    return new TextFieldCell();
-	                }
-	            }
-		);
+			
 		
 	}
 	
@@ -181,25 +176,21 @@ public class MainViewController implements Initializable
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
 		{
-			mainApp.getCallendarEntriesObservableList().remove(listView.getSelectionModel().getSelectedIndex());
+			System.out.println(mainApp.getCallendarEntriesObservableList().size());
+			mainApp.getCallendarEntriesObservableList().remove(listView.getSelectionModel().getSelectedItem());
+			System.out.println(mainApp.getCallendarEntriesObservableList().size());
 			
-			listView.setCellFactory(new Callback<ListView<CallendarEntry>, 
-		            ListCell<CallendarEntry>>() {
-		                @Override 
-		                public ListCell<CallendarEntry> call(ListView<CallendarEntry> listView) {
-		                    return new TextFieldCell();
-		                }
-		            }
-			);
+			
 		} 
 		changeButtonVisibilityOnSave();
+		listView.refresh();
 	}
 	
 	public void tableColumnItem_onAction(CallendarEntry callendarEntry)
 	{
 		System.out.println("Item in table chosen");
-		if (callendarEntry != null) {
-	        // Fill the labels with info from the person object.
+		if (callendarEntry != null) 
+		{
 	        textFieldTitle.setText(callendarEntry.getTitle());
 	        textFieldVenue.setText(callendarEntry.getVenue());
 	        textAreaDescription.setText(callendarEntry.getDescription());
@@ -208,7 +199,6 @@ public class MainViewController implements Initializable
 	    
 	    else
 	    {
-	        //TO DO: set labels to empty strings
 	    	textFieldTitle.setText("");
 	        textFieldVenue.setText("");
 	        textAreaDescription.setText("");
