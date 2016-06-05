@@ -28,7 +28,7 @@
                         <CalendarPicker fx:id="calendarPicker" layoutX="14.0" layoutY="-1.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                      
                      </children></AnchorPane>
-                <AnchorPane minHeight="145.0" minWidth="350.0">
+                <AnchorPane minHeight="200.0" minWidth="350.0">
                      <children>
                         <Button fx:id="deleteButton" layoutX="374.0" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#deleteButton_onAction" text="Delete" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                         <Button fx:id="editButton" layoutX="342.0" layoutY="55.0" mnemonicParsing="false" onMouseClicked="#editButton_onAction" text="Edit" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
@@ -38,12 +38,10 @@
                         <Label layoutX="8.0" layoutY="75.0" text="Description" AnchorPane.topAnchor="75.0" />
                         <TextField fx:id="textFieldTitle" editable="false" layoutX="75.0" layoutY="1.0" prefHeight="25.0" prefWidth="360.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <TextField fx:id="textFieldVenue" editable="false" layoutX="75.0" layoutY="33.0" prefHeight="25.0" prefWidth="360.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0" />
-                        <TextArea fx:id="textAreaDescription" editable="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="75.0" />
+                        <TextArea fx:id="textAreaDescription" editable="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="75.0" />
                         <Button fx:id="confrimAddingNewEventButton" layoutX="75.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#confirmAddingNewEventButton_onAction" text="Confirm adding new event" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="75.0" />
-                        <Label layoutX="44.0" layoutY="114.0" text="Date" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="44.0" />
-                        <TextField fx:id="textFieldVenue1" editable="false" layoutX="76.0" layoutY="110.0" prefHeight="25.0" prefWidth="78.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="76.0" />
-                        <Label layoutX="160.0" layoutY="114.0" text="Hour" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="160.0" />
-                        <CalendarTimeTextField layoutX="197.0" layoutY="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="197.0" />
+                        <Label layoutX="43.0" layoutY="109.0" text="Hour" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="43.0" />
+                        <CalendarTimeTextField layoutX="75.0" layoutY="118.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="75.0" />
                      </children></AnchorPane>
               </items>
             </SplitPane>
