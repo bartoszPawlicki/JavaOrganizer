@@ -37,8 +37,6 @@ public class MainApp extends Application
     
     public MainApp()
     {
-    	callendarEntriesObservableList.add(new CallendarEntry("nazwa wydarzenia 1", "zadupie", "Wydarzenie na zadupiu"));
-    	callendarEntriesObservableList.add(new CallendarEntry("Otwarcie parasola w dupie", "Palac prezydencki", "Wielkie otwarcie"));
     }
     
 	public Stage getPrimaryStage() 

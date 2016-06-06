@@ -7,16 +7,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 
 public class RootLayoutController implements Initializable
 {
@@ -56,7 +62,12 @@ public class RootLayoutController implements Initializable
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file)))
 		{
 			file.createNewFile();
-			String temp2 = xstream.toXML(mainApp.getCallendarEntriesObservableList());
+			List<CallendarEntry> list = new ArrayList<CallendarEntry>();
+			for (CallendarEntry callendarEntry : mainApp.getCallendarEntriesObservableList())
+			{
+				list.add(callendarEntry);
+			}
+			String temp2 = xstream.toXML(list);
 			bufferedWriter.write(temp2);
 		}
 		
@@ -105,6 +116,10 @@ public class RootLayoutController implements Initializable
 				"b49f86d8da8665",
 				"3c8f720c");
 		dataBaseConncetion.SaveCallendarEntries(mainApp.getCallendarEntriesObservableList());
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Database");
+		alert.setHeaderText("Data successfully saved to database");
+		alert.showAndWait();
 	}
 	
 	public void menuItemFileLoadFromDataBase_onAction()
@@ -115,5 +130,9 @@ public class RootLayoutController implements Initializable
 				"b49f86d8da8665",
 				"3c8f720c");
 		mainApp.getCallendarEntriesObservableList().setAll(dataBaseConncetion.LoadCallendarEntries());
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Database");
+		alert.setHeaderText("Data successfully loaded from database");
+		alert.showAndWait();
 	}
 }
