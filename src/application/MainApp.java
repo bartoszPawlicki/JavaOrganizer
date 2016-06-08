@@ -29,14 +29,24 @@ public class MainApp extends Application
     
     private ObservableList<CallendarEntry> callendarEntriesObservableList = FXCollections.observableArrayList(extractor);
     
+    private ObservableList<CallendarEntry> filteredCallendarEntreisObservableList = FXCollections.observableArrayList(extractor);
+    
     public ObservableList<CallendarEntry> getCallendarEntriesObservableList()
 	{
 		return callendarEntriesObservableList;
 	}
-
     
+    public ObservableList<CallendarEntry> getFilteredCallendarEntreisObservableList()
+	{
+		return filteredCallendarEntreisObservableList;
+	}
+
     public MainApp()
     {
+    	callendarEntriesObservableList.add(new CallendarEntry("Wyd dzisiaj", "Radom", "Parasola w dupie", "08.06.2016"));
+    	callendarEntriesObservableList.add(new CallendarEntry("3 dni temu", "Zgierz", "Parasola w dupie", "05.06.2016"));
+    	callendarEntriesObservableList.add(new CallendarEntry("15 dni temu", "Abababa", "Parasola w dupie", "24.05.2016"));
+    	callendarEntriesObservableList.add(new CallendarEntry("2 miechy temu", "SAsdasd", "Parasola w dupie", "08.04.2016"));
     }
     
 	public Stage getPrimaryStage() 

@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -176,11 +177,7 @@ public class MainViewController implements Initializable
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
 		{
-			System.out.println(mainApp.getCallendarEntriesObservableList().size());
 			mainApp.getCallendarEntriesObservableList().remove(listView.getSelectionModel().getSelectedItem());
-			System.out.println(mainApp.getCallendarEntriesObservableList().size());
-			
-			
 		} 
 		changeButtonVisibilityOnSave();
 		listView.refresh();
@@ -240,5 +237,53 @@ public class MainViewController implements Initializable
 			confrimAddingNewEventButton.setVisible(false);
 		}
 		
+	}
+	
+	public void filterEvents (String filter)
+	{
+		switch (filter)
+		{
+		case "All events":
+		
+			mainApp.getFilteredCallendarEntreisObservableList().setAll(mainApp.getCallendarEntriesObservableList());
+			break;
+			
+		case "This month":
+			mainApp.getFilteredCallendarEntreisObservableList().clear();
+			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			{
+				if(item.getDate().isAfter(LocalDate.now().minusMonths(1)))
+					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
+			}
+			break;
+			
+		case "This week":
+			mainApp.getFilteredCallendarEntreisObservableList().clear();
+			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			{
+				if(item.getDate().isAfter(LocalDate.now().minusWeeks(1)))
+					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
+			}
+			break;
+			
+		case "Today":
+			mainApp.getFilteredCallendarEntreisObservableList().clear();
+			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			{
+				if(item.getDate().isAfter(LocalDate.now().minusDays(1)))
+					mainApp.getFilteredCallendarEntreisObservableList().add(item);
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	public void comboBoxFiltre_onAction()
+	{
+		String chosenFiltre = comboboxFiltre.getSelectionModel().getSelectedItem();
+		filterEvents(chosenFiltre);
+		listView.setItems(mainApp.getFilteredCallendarEntreisObservableList());
 	}
 }

@@ -1,5 +1,7 @@
 package application;
 
+import java.time.LocalDate;
+
 import javafx.beans.property.*;
 
 public class CallendarEntry 
@@ -7,7 +9,7 @@ public class CallendarEntry
 	private final StringProperty title;
     private final StringProperty venue;
     private final StringProperty description;
-    //private final ObjectProperty<LocalDate> date;
+    private final ObjectProperty<LocalDate> date;
     
 
 	public CallendarEntry(String title, String venue, String description) 
@@ -15,6 +17,17 @@ public class CallendarEntry
 		this.title = new SimpleStringProperty (title);
 		this.venue = new SimpleStringProperty (venue);
 		this.description = new SimpleStringProperty (description);
+		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+	}
+	
+	public CallendarEntry(String title, String venue, String description, String date) 
+	{
+		this.title = new SimpleStringProperty (title);
+		this.venue = new SimpleStringProperty (venue);
+		this.description = new SimpleStringProperty (description);
+		
+		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.from(DateConverter.parse(date)));
+		
 	}
 	
 	public String getTitle() 
@@ -60,6 +73,18 @@ public class CallendarEntry
     public StringProperty descriptionProperty() 
     {
         return description;
+    }
+    
+    public LocalDate getDate() {
+        return date.get();
+    }
+
+    public void setDate(LocalDate date) {
+        this.date.set(date);
+    }
+
+    public ObjectProperty<LocalDate> dateProperty() {
+        return date;
     }
 	
        
