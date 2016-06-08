@@ -2,6 +2,7 @@ package application;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -76,7 +77,7 @@ public class MainViewController implements Initializable
 	{		
 		calendarPicker.calendarProperty().addListener((observable) -> {
 			
-			System.out.println(calendarPicker.getCalendar().getTime());
+			calendarPickerDayChosen_onAction();
 		        });
 		listComboboxItems = FXCollections.observableArrayList();
 		listComboboxItems.add("All events");
@@ -239,7 +240,7 @@ public class MainViewController implements Initializable
 		
 	}
 	
-	public void filterEvents (String filter)
+	public void filterEvents (String filter, LocalDate date)
 	{
 		switch (filter)
 		{
@@ -249,6 +250,7 @@ public class MainViewController implements Initializable
 			break;
 			
 		case "This month":
+			
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
@@ -258,6 +260,7 @@ public class MainViewController implements Initializable
 			break;
 			
 		case "This week":
+			
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
@@ -267,6 +270,7 @@ public class MainViewController implements Initializable
 			break;
 			
 		case "Today":
+			
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
@@ -274,16 +278,44 @@ public class MainViewController implements Initializable
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);
 			}
 			break;
-
+			
+		case "Other day":
+			mainApp.getFilteredCallendarEntreisObservableList().clear();
+			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			{
+				if(item.getDate().isEqual(date))
+					mainApp.getFilteredCallendarEntreisObservableList().add(item);
+				else System.out.println(item.getDate() + "   " + date);
+			}
+			break;
+			
 		default:
 			break;
+			
 		}
+		listView.setItems(mainApp.getFilteredCallendarEntreisObservableList());
 	}
 	
 	public void comboBoxFiltre_onAction()
 	{
 		String chosenFiltre = comboboxFiltre.getSelectionModel().getSelectedItem();
-		filterEvents(chosenFiltre);
-		listView.setItems(mainApp.getFilteredCallendarEntreisObservableList());
+		filterEvents(chosenFiltre, DateConverter.parse(chosenFiltre));
+	}
+	
+	public void calendarPickerDayChosen_onAction()
+	{
+		System.out.println(calendarPicker.getCalendar().getTime());
+		System.out.println(DateConverter.format(calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+		
+		LocalDate date = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		if(listComboboxItems.size()>4)
+		{
+			listComboboxItems.remove(4);
+			comboboxFiltre.setItems(listComboboxItems);
+		}
+				
+		listComboboxItems.add(DateConverter.format(date));
+		filterEvents("Other day", date);
+		// TODO set selection of combobox
 	}
 }
