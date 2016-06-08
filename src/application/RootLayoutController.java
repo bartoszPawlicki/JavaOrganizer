@@ -98,6 +98,7 @@ public class RootLayoutController implements Initializable
 		
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file)))
 		{
+			@SuppressWarnings("unchecked")
 			ObservableList<CallendarEntry> tempList = (ObservableList<CallendarEntry>)xstream.fromXML(file);
 			mainApp.getCallendarEntriesObservableList().setAll(tempList);
 		}
