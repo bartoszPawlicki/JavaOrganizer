@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 
+import application.model.CallendarEntry;
 import javafx.application.Application;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -69,7 +70,7 @@ public class MainApp extends Application
         try 
         {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
             
 
@@ -91,7 +92,7 @@ public class MainApp extends Application
         try 
         {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("MainView.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/MainView.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
 
             rootLayout.setCenter(personOverview);

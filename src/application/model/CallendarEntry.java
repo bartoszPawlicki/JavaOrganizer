@@ -1,7 +1,8 @@
-package application;
+package application.model;
 
 import java.time.LocalDate;
 
+import application.util.DateConverter;
 import javafx.beans.property.*;
 
 public class CallendarEntry 

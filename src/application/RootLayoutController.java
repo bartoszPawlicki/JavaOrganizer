@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import application.model.CallendarEntry;
+import application.util.DataBaseConnection;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -73,7 +75,7 @@ public class RootLayoutController implements Initializable
 		
 		catch (IOException e)
 		{
-			
+			System.out.println(e.getMessage());
 		}
 	}
 	public void menuItemFileLoadFromXml_onAction()

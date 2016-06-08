@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.model.CallendarEntry;
+import application.util.DateConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

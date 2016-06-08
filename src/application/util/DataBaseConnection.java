@@ -1,10 +1,11 @@
-package application;
+package application.util;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.model.CallendarEntry;
 import javafx.collections.ObservableList;
 
 public class DataBaseConnection
