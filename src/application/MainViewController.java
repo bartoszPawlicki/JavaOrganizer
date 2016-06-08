@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -192,7 +193,9 @@ public class MainViewController implements Initializable
 	        textFieldTitle.setText(callendarEntry.getTitle());
 	        textFieldVenue.setText(callendarEntry.getVenue());
 	        textAreaDescription.setText(callendarEntry.getDescription());
-
+	        
+	        //Date date = Date.from(callendarEntry.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+	        //calendarPicker.getCalendar().setTime(date);
 	    } 
 	    
 	    else
@@ -310,12 +313,12 @@ public class MainViewController implements Initializable
 		LocalDate date = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		if(listComboboxItems.size()>4)
 		{
-			listComboboxItems.remove(4);
-			comboboxFiltre.setItems(listComboboxItems);
+			listComboboxItems.remove(4); 
 		}
 				
 		listComboboxItems.add(DateConverter.format(date));
 		filterEvents("Other day", date);
+		comboboxFiltre.getSelectionModel().select(4);
 		// TODO set selection of combobox
 	}
 }
