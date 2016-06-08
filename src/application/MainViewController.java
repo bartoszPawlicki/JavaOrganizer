@@ -7,7 +7,7 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.model.CallendarEntry;
+import application.model.CalendarEntry;
 import application.util.DateConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,67 +21,41 @@ import jfxtras.scene.control.CalendarPicker;
 public class MainViewController implements Initializable
 {
 	private MainApp mainApp;
-	
 	@FXML
 	private Button saveButton;
-	
 	@FXML
 	private Button editButton;
-	
 	@FXML
 	private Button deleteButton;
-	
 	@FXML
 	private TextField textFieldTitle;
-	
 	@FXML
 	private TextField textFieldVenue;
-	
 	@FXML
 	private TextArea textAreaDescription;
-	
 	@FXML
 	private ComboBox<String> comboboxFiltre;
-	
 	private ObservableList<String> listComboboxItems;
-	
 	@FXML
 	private Button addNewEventButton;
-	
 	@FXML
 	private Button confrimAddingNewEventButton;
-	
-	//@FXML
-	//private TableView<CallendarEntry> tableView;
-	
-	//@FXML
-	//private TableColumn<CallendarEntry, String> tableColumn1;
-	
 	@FXML
 	private CalendarPicker calendarPicker;
-	
 	@FXML
-	private ListView<CallendarEntry> listView;
+	private ListView<CalendarEntry> listView;
 	
 	public void setMainApp(MainApp mainApp) 
 	{
         this.mainApp = mainApp;
-
-        // Add observable list data to the table
-        //tableView.setItems(mainApp.getCallendarEntriesObservableList());
         listView.setItems(mainApp.getCallendarEntriesObservableList());
-        
     }
-	
 	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{		
-		calendarPicker.calendarProperty().addListener((observable) -> {
-			
-			calendarPickerDayChosen_onAction();
-		        });
+		
 		listComboboxItems = FXCollections.observableArrayList();
 		listComboboxItems.add("All events");
 		listComboboxItems.add("This month");
@@ -89,22 +63,10 @@ public class MainViewController implements Initializable
 		listComboboxItems.add("Today");
 		comboboxFiltre.setItems(listComboboxItems);
 		
-		
-		
-		//tableColumn1.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-		
-		
-		
-
-		
-		//tableColumnItemClick_onAction(null);
-		//tableView.getSelectionModel().selectedItemProperty().addListener(
-	            //(observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
-		
-		listView.setCellFactory(new Callback<ListView<CallendarEntry>, 
-	            ListCell<CallendarEntry>>() {
+		listView.setCellFactory(new Callback<ListView<CalendarEntry>, 
+	            ListCell<CalendarEntry>>() {
 	                @Override 
-	                public ListCell<CallendarEntry> call(ListView<CallendarEntry> listView) {
+	                public ListCell<CalendarEntry> call(ListView<CalendarEntry> listView) {
 	                    return new TextFieldCell();
 	                }
 	            }
@@ -113,11 +75,15 @@ public class MainViewController implements Initializable
 		listView.getSelectionModel().selectedItemProperty().addListener(
 	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
 		
+		calendarPicker.calendarProperty().addListener((observable) -> {
+			calendarPickerDayChosen_onAction();
+		        });
+		
 	}
 	
-	static class TextFieldCell extends ListCell<CallendarEntry> {
+	static class TextFieldCell extends ListCell<CalendarEntry> {
         @Override
-        public void updateItem(CallendarEntry item, boolean empty) {
+        public void updateItem(CalendarEntry item, boolean empty) {
             super.updateItem(item, empty);
             //Label field = new Label();
             if (item != null) {
@@ -147,16 +113,9 @@ public class MainViewController implements Initializable
 	{
 		System.out.println("SaveButton action");
 		changeButtonVisibilityOnSave();
-		
-		//tableView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
-		//tableView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
-		//tableView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
-		
 		listView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
 		listView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
 		listView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
-			
-		
 	}
 	
 	public void editButton_onAction()
@@ -187,7 +146,7 @@ public class MainViewController implements Initializable
 		listView.refresh();
 	}
 	
-	public void tableColumnItem_onAction(CallendarEntry callendarEntry)
+	public void tableColumnItem_onAction(CalendarEntry callendarEntry)
 	{
 		System.out.println("Item in table chosen");
 		if (callendarEntry != null) 
@@ -196,23 +155,18 @@ public class MainViewController implements Initializable
 	        textFieldVenue.setText(callendarEntry.getVenue());
 	        textAreaDescription.setText(callendarEntry.getDescription());
 	        
+	        //TODO Selecting date in calendar when selecting entry in listView
+	        
 	        //Date date = Date.from(callendarEntry.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 	        //calendarPicker.getCalendar().setTime(date);
-	    } 
-	    
-	    else
-	    {
-	    	textFieldTitle.setText("");
-	        textFieldVenue.setText("");
-	        textAreaDescription.setText("");
-	    }	
+	    } 	
 	}
 	
 	public void addNewEventButton_onAction()
 	{
 		System.out.println("AddNewEventButtonClicked");
-		tableColumnItem_onAction(null);
 		
+		tableColumnItem_onAction(null);
 		textFieldTitle.setEditable(true);
 		textFieldVenue.setEditable(true);
 		textAreaDescription.setEditable(true);
@@ -232,13 +186,12 @@ public class MainViewController implements Initializable
 	        alert.setTitle("Adding new event failed!");
 	        alert.setHeaderText("No title and/or venue specified");
 	        alert.setContentText("Please specify at least title and venue to add new event");
-
 	        alert.showAndWait();
 		}
 		else
 		{
 			mainApp.getCallendarEntriesObservableList().add(
-					new CallendarEntry(textFieldTitle.getText(), textFieldVenue.getText(), textAreaDescription.getText()));
+					new CalendarEntry(textFieldTitle.getText(), textFieldVenue.getText(), textAreaDescription.getText()));
 			changeButtonVisibilityOnSave();
 			confrimAddingNewEventButton.setVisible(false);
 		}
@@ -257,7 +210,7 @@ public class MainViewController implements Initializable
 		case "This month":
 			
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
 				if(item.getDate().isAfter(LocalDate.now().minusMonths(1)))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
@@ -267,7 +220,7 @@ public class MainViewController implements Initializable
 		case "This week":
 			
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
 				if(item.getDate().isAfter(LocalDate.now().minusWeeks(1)))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
@@ -277,7 +230,7 @@ public class MainViewController implements Initializable
 		case "Today":
 			
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
 				if(item.getDate().isAfter(LocalDate.now().minusDays(1)))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);
@@ -286,7 +239,7 @@ public class MainViewController implements Initializable
 			
 		case "Other day":
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CallendarEntry item : mainApp.getCallendarEntriesObservableList())
+			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
 				if(item.getDate().isEqual(date))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);
@@ -321,6 +274,5 @@ public class MainViewController implements Initializable
 		listComboboxItems.add(DateConverter.format(date));
 		filterEvents("Other day", date);
 		comboboxFiltre.getSelectionModel().select(4);
-		// TODO set selection of combobox
 	}
 }

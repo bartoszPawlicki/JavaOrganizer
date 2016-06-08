@@ -11,11 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-
-import application.model.CallendarEntry;
+import application.model.CalendarEntry;
 import application.util.DataBaseConnection;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -56,7 +54,7 @@ public class RootLayoutController implements Initializable
 		Platform.exit();
 	}
 	
-	public void menuItemFileSaveToXml_onAction()
+	public void menuItemFileSaveToXml_onAction() // TODO refactor serializing
 	{
 		XStream xstream = new XStream(new DomDriver());
 		File file = new File("CallendarEntries.txt");
@@ -64,8 +62,8 @@ public class RootLayoutController implements Initializable
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file)))
 		{
 			file.createNewFile();
-			List<CallendarEntry> list = new ArrayList<CallendarEntry>();
-			for (CallendarEntry callendarEntry : mainApp.getCallendarEntriesObservableList())
+			List<CalendarEntry> list = new ArrayList<CalendarEntry>();
+			for (CalendarEntry callendarEntry : mainApp.getCallendarEntriesObservableList())
 			{
 				list.add(callendarEntry);
 			}
@@ -101,7 +99,7 @@ public class RootLayoutController implements Initializable
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file)))
 		{
 			@SuppressWarnings("unchecked")
-			ObservableList<CallendarEntry> tempList = (ObservableList<CallendarEntry>)xstream.fromXML(file);
+			ObservableList<CalendarEntry> tempList = (ObservableList<CalendarEntry>)xstream.fromXML(file);
 			mainApp.getCallendarEntriesObservableList().setAll(tempList);
 		}
 		

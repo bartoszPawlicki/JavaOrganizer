@@ -1,8 +1,7 @@
 package application;
 
 import java.io.IOException;
-
-import application.model.CallendarEntry;
+import application.model.CalendarEntry;
 import javafx.application.Application;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -17,37 +16,38 @@ import javafx.util.Callback;
 public class MainApp extends Application 
 {
     private BorderPane rootLayout;
-    
     private Stage primaryStage;
     
-    Callback<CallendarEntry, Observable[]> extractor = new Callback<CallendarEntry, Observable[]>() {
+    Callback<CalendarEntry, Observable[]> extractor = new Callback<CalendarEntry, Observable[]>() {
 
         @Override
-        public Observable[] call(CallendarEntry c) {
+        public Observable[] call(CalendarEntry c) {
             return new Observable[] {c.titleProperty(), c.venueProperty(), c.descriptionProperty()};
         }
     };
     
-    private ObservableList<CallendarEntry> callendarEntriesObservableList = FXCollections.observableArrayList(extractor);
+    //wszystkie zdarzenia
+    private ObservableList<CalendarEntry> callendarEntriesObservableList = FXCollections.observableArrayList(extractor);
     
-    private ObservableList<CallendarEntry> filteredCallendarEntreisObservableList = FXCollections.observableArrayList(extractor);
+    //obecnie wyœwietlane
+    private ObservableList<CalendarEntry> filteredCallendarEntreisObservableList = FXCollections.observableArrayList(extractor);
     
-    public ObservableList<CallendarEntry> getCallendarEntriesObservableList()
+    public ObservableList<CalendarEntry> getCallendarEntriesObservableList()
 	{
 		return callendarEntriesObservableList;
 	}
     
-    public ObservableList<CallendarEntry> getFilteredCallendarEntreisObservableList()
+    public ObservableList<CalendarEntry> getFilteredCallendarEntreisObservableList()
 	{
 		return filteredCallendarEntreisObservableList;
 	}
 
     public MainApp()
     {
-    	callendarEntriesObservableList.add(new CallendarEntry("Wyd dzisiaj", "Radom", "Parasola w dupie", "08.06.2016"));
-    	callendarEntriesObservableList.add(new CallendarEntry("3 dni temu", "Zgierz", "Parasola w dupie", "05.06.2016"));
-    	callendarEntriesObservableList.add(new CallendarEntry("15 dni temu", "Abababa", "Parasola w dupie", "24.05.2016"));
-    	callendarEntriesObservableList.add(new CallendarEntry("2 miechy temu", "SAsdasd", "Parasola w dupie", "08.04.2016"));
+    	callendarEntriesObservableList.add(new CalendarEntry("Wyd dzisiaj", "Radom", "Otwarcie parasola w dupie", "08.06.2016"));
+    	callendarEntriesObservableList.add(new CalendarEntry("3 dni temu", "Zgierz", "Otwarcie parasola w dupie", "05.06.2016"));
+    	callendarEntriesObservableList.add(new CalendarEntry("15 dni temu", "Abababa", "Otwarcie parasola w dupie", "24.05.2016"));
+    	callendarEntriesObservableList.add(new CalendarEntry("2 miechy temu", "SAsdasd", "Otwarcie parasola w dupie", "08.04.2016"));
     }
     
 	public Stage getPrimaryStage() 

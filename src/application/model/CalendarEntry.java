@@ -1,11 +1,10 @@
 package application.model;
 
 import java.time.LocalDate;
-
 import application.util.DateConverter;
 import javafx.beans.property.*;
 
-public class CallendarEntry 
+public class CalendarEntry 
 {
 	private final StringProperty title;
     private final StringProperty venue;
@@ -13,22 +12,20 @@ public class CallendarEntry
     private final ObjectProperty<LocalDate> date;
     
 
-	public CallendarEntry(String title, String venue, String description) 
+	public CalendarEntry(String title, String venue, String description) 
 	{
 		this.title = new SimpleStringProperty (title);
 		this.venue = new SimpleStringProperty (venue);
 		this.description = new SimpleStringProperty (description);
-		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(2016, 5, 23));
 	}
 	
-	public CallendarEntry(String title, String venue, String description, String date) 
+	public CalendarEntry(String title, String venue, String description, String date) 
 	{
 		this.title = new SimpleStringProperty (title);
 		this.venue = new SimpleStringProperty (venue);
 		this.description = new SimpleStringProperty (description);
-		
 		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.from(DateConverter.parse(date)));
-		
 	}
 	
 	public String getTitle() 
@@ -87,7 +84,5 @@ public class CallendarEntry
     public ObjectProperty<LocalDate> dateProperty() {
         return date;
     }
-	
-       
 }
 

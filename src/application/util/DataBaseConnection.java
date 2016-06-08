@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import application.model.CallendarEntry;
+import application.model.CalendarEntry;
 import javafx.collections.ObservableList;
 
 public class DataBaseConnection
@@ -21,9 +20,9 @@ public class DataBaseConnection
         		+ "&password=" + password;
 	}
 	
-	public ArrayList<CallendarEntry> LoadCallendarEntries()
+	public ArrayList<CalendarEntry> LoadCallendarEntries()
 	{
-		ArrayList<CallendarEntry> callendarEntryArrayList = new ArrayList<CallendarEntry>();
+		ArrayList<CalendarEntry> callendarEntryArrayList = new ArrayList<CalendarEntry>();
 		
         String query = "Select * FROM callendarentry";
         
@@ -35,7 +34,7 @@ public class DataBaseConnection
 
                 while (resultSet.next()) 
                 {
-                	CallendarEntry tmpCallendarEntry = new CallendarEntry(resultSet.getString(2),resultSet.getString(3),resultSet.getString(4));
+                	CalendarEntry tmpCallendarEntry = new CalendarEntry(resultSet.getString(2),resultSet.getString(3),resultSet.getString(4));
                 	callendarEntryArrayList.add(tmpCallendarEntry);
                 }
         }
@@ -53,13 +52,13 @@ public class DataBaseConnection
 		return callendarEntryArrayList;
 	}
 	
-	public void SaveCallendarEntries(ObservableList<CallendarEntry> callendarEntryArrayList)
+	public void SaveCallendarEntries(ObservableList<CalendarEntry> callendarEntryArrayList)
 	{
-		for(CallendarEntry callendarEntry : callendarEntryArrayList)
+		for(CalendarEntry callendarEntry : callendarEntryArrayList)
 			SaveCallendarEntry(callendarEntry);
 	}
 	
-	public void SaveCallendarEntry(CallendarEntry callendarEntry)
+	public void SaveCallendarEntry(CalendarEntry callendarEntry)
 	{
 		String query = "INSERT INTO callendarentry (title, venue,description) "
 				+ "VALUES (\"" +  callendarEntry.getTitle()
