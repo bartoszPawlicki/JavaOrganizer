@@ -20,6 +20,14 @@ public class CalendarEntry
 		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(2016, 5, 23));
 	}
 	
+	public CalendarEntry(String title, String venue, String description, LocalDate date) 
+	{
+		this.title = new SimpleStringProperty (title);
+		this.venue = new SimpleStringProperty (venue);
+		this.description = new SimpleStringProperty (description);
+		this.date = new SimpleObjectProperty<LocalDate>(date);
+	}
+	
 	public CalendarEntry(String title, String venue, String description, String date) 
 	{
 		this.title = new SimpleStringProperty (title);

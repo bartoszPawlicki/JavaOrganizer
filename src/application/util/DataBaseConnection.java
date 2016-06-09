@@ -3,6 +3,7 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import application.model.CalendarEntry;
 import javafx.collections.ObservableList;
@@ -34,13 +35,17 @@ public class DataBaseConnection
 
                 while (resultSet.next()) 
                 {
-                	CalendarEntry tmpCallendarEntry = new CalendarEntry(resultSet.getString(2),resultSet.getString(3),resultSet.getString(4));
+                	CalendarEntry tmpCallendarEntry = new CalendarEntry(
+                			resultSet.getString(2),
+                			resultSet.getString(3),
+                			resultSet.getString(4), 
+                			resultSet.getDate(5).toLocalDate());
                 	callendarEntryArrayList.add(tmpCallendarEntry);
                 }
         }
         catch(ClassNotFoundException wyjatek) 
         {
-            System.out.println("Problem with com.mysql.jdbc.Driver");
+            System.out.println("Problem with com.mysql.jdbc.Driver");	
         }
 
         catch(SQLException wyjatek) 
@@ -60,11 +65,17 @@ public class DataBaseConnection
 	
 	public void SaveCallendarEntry(CalendarEntry callendarEntry)
 	{
-		String query = "INSERT INTO callendarentry (title, venue,description) "
+		LocalDate localDate = callendarEntry.getDate();
+		String date = localDate.getYear() + "-" + localDate.getMonthValue() + "-" + localDate.getDayOfMonth();
+		
+		String query = "INSERT INTO callendarentry (title, venue, description, entry_date) "
 				+ "VALUES (\"" +  callendarEntry.getTitle()
 				+ "\", \"" + callendarEntry.getVenue()
 				+ "\", \"" + callendarEntry.getDescription()
+				+ "\", \"" + date
 				+ "\")";
+		
+		
 		
         try (Connection connection = DriverManager.getConnection(URLConncetion)) 
         {

@@ -1,7 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Optional;
