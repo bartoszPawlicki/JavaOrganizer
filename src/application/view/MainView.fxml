@@ -11,7 +11,7 @@
 <?import jfxtras.scene.control.CalendarPicker?>
 <?import jfxtras.scene.control.CalendarTimeTextField?>
 
-<AnchorPane minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainViewController">
+<AnchorPane minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainViewController">
    <children>
       <SplitPane dividerPositions="0.5" layoutX="-170.0" layoutY="-118.0" prefHeight="42.0" prefWidth="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -42,6 +42,7 @@
                         <Button fx:id="confrimAddingNewEventButton" layoutX="75.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#confirmAddingNewEventButton_onAction" text="Confirm adding new event" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="75.0" />
                         <Label layoutX="43.0" layoutY="109.0" text="Hour" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="43.0" />
                         <CalendarTimeTextField layoutX="75.0" layoutY="118.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="75.0" />
+                        <ComboBox fx:id="comboboxAlarms" layoutX="221.0" layoutY="130.0" prefHeight="25.0" prefWidth="145.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="221.0" />
                      </children></AnchorPane>
               </items>
             </SplitPane>

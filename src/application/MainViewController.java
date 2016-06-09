@@ -36,6 +36,9 @@ public class MainViewController implements Initializable
 	private ComboBox<String> comboboxFiltre;
 	private ObservableList<String> listComboboxItems;
 	@FXML
+	private ComboBox<String> comboboxAlarms;
+	private ObservableList<String> listComboboxAlarmItems;
+	@FXML
 	private Button addNewEventButton;
 	@FXML
 	private Button confrimAddingNewEventButton;
@@ -54,6 +57,19 @@ public class MainViewController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{		
+		listComboboxAlarmItems = FXCollections.observableArrayList();
+		listComboboxAlarmItems.add("Without reminder");
+		listComboboxAlarmItems.add("5 min");
+		listComboboxAlarmItems.add("10 min");
+		listComboboxAlarmItems.add("15 min");
+		listComboboxAlarmItems.add("30 min");
+		listComboboxAlarmItems.add("60 min");
+		listComboboxAlarmItems.add("2 hours");
+		listComboboxAlarmItems.add("3 hours");
+		listComboboxAlarmItems.add("6 hours");
+		listComboboxAlarmItems.add("12 hours");
+		listComboboxAlarmItems.add("24 hours");
+		comboboxAlarms.setItems(listComboboxAlarmItems);
 		
 		listComboboxItems = FXCollections.observableArrayList();
 		listComboboxItems.add("All events");
