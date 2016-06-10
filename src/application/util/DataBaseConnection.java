@@ -40,7 +40,10 @@ public class DataBaseConnection
                 			resultSet.getString(3),
                 			resultSet.getString(4), 
                 			resultSet.getDate(5).toLocalDate(),
-                			resultSet.getTime(6).toLocalTime());
+                			resultSet.getTime(6).toLocalTime(),
+                			resultSet.getBoolean(7),
+                			resultSet.getTime(6).toLocalTime(),
+                			resultSet.getString(8));
                 	callendarEntryArrayList.add(tmpCallendarEntry);
                 }
         }

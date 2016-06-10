@@ -83,6 +83,7 @@ public class MainViewController implements Initializable
 		@Override
 		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
 		{
+
 			comboboxAlarms.setDisable(!newValue);
 		}
 	}
@@ -157,6 +158,7 @@ public class MainViewController implements Initializable
 		editButton.setVisible(true);
 		checkboxAlarm.setDisable(true);
 		calendarTextFieldEntryTime.setDisable(true);
+			comboboxAlarms.setDisable(true);
 	}
 	
 	public void saveButton_onAction()
@@ -169,10 +171,13 @@ public class MainViewController implements Initializable
 //		listView.getSelectionModel().getSelectedItem().setDate(calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
 		listView.getSelectionModel().getSelectedItem().setTime(
-				LocalTime.parse(
-						calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY) 
-						+ ":" + 
+				LocalTime.of(
+						calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY),
 						calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE)));
+		
+		listView.getSelectionModel().getSelectedItem().setIsAlarm(checkboxAlarm.selectedProperty().getValue());
+		listView.getSelectionModel().getSelectedItem().setAlarmTimeBeforeEntry(hashMapcomboboxAlarms.get(comboboxAlarms.getSelectionModel().getSelectedItem()));
+		listView.getSelectionModel().getSelectedItem().setAlarmStringBeforeEntry(comboboxAlarms.getSelectionModel().getSelectedItem());
 	}
 	
 	public void editButton_onAction()
@@ -186,6 +191,7 @@ public class MainViewController implements Initializable
 		editButton.setVisible(false);
 		checkboxAlarm.setDisable(false);
 		calendarTextFieldEntryTime.setDisable(false);
+			comboboxAlarms.setDisable(false);
 	}
 	
 	public void deleteButton_onAction()
@@ -216,6 +222,12 @@ public class MainViewController implements Initializable
 	        Calendar calendar = Calendar.getInstance();
 	        calendar.set(0, 0, 0, calendarEntry.getTime().getHour(), calendarEntry.getTime().getMinute());
 	        calendarTextFieldEntryTime.setCalendar(calendar);
+	        checkboxAlarm.setSelected(calendarEntry.getIsAlarm());
+	        comboboxAlarms.getSelectionModel().select(calendarEntry.getAlarmStringBeforeEntry());
+	        
+	        if((checkboxAlarm.isSelected() && checkboxAlarm.isDisabled()) || !checkboxAlarm.isSelected())
+	        	comboboxAlarms.setDisable(true);
+	       
 	        //TODO Selecting date in calendar when selecting entry in listView
 	        
 	        //Date date = Date.from(callendarEntry.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -226,7 +238,6 @@ public class MainViewController implements Initializable
 	public void addNewEventButton_onAction()
 	{
 		System.out.println("AddNewEventButtonClicked");
-		
 		tableColumnItem_onAction(null);
 		textFieldTitle.setEditable(true);
 		textFieldVenue.setEditable(true);
@@ -235,7 +246,6 @@ public class MainViewController implements Initializable
 		deleteButton.setVisible(false);
 		editButton.setVisible(false);
 		confrimAddingNewEventButton.setVisible(true);
-		
 	}
 	
 	public void confirmAddingNewEventButton_onAction()
@@ -256,10 +266,12 @@ public class MainViewController implements Initializable
 							textFieldVenue.getText(), 
 							textAreaDescription.getText(), 
 							calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-							LocalTime.parse(
-									calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY) 
-									+ ":" + 
-									calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE))
+							LocalTime.of(
+									calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY),
+									calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE)),
+							checkboxAlarm.selectedProperty().getValue(),
+							hashMapcomboboxAlarms.get(comboboxAlarms.getSelectionModel().getSelectedItem()),
+							comboboxAlarms.getSelectionModel().getSelectedItem()
 							));
 			changeButtonVisibilityOnSave();
 			confrimAddingNewEventButton.setVisible(false);

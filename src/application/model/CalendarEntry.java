@@ -13,6 +13,9 @@ public class CalendarEntry
     private final StringProperty description;
     private final ObjectProperty<LocalDate> date;
     private final ObjectProperty<LocalTime> time;
+    private final ObjectProperty<Boolean> isAlarm;
+    private final ObjectProperty<LocalTime> alarmTimeBeforeEntry;
+    private final StringProperty alarmStringBeforeEntry;
 
 	public CalendarEntry(String title, String venue, String description) 
 	{
@@ -21,15 +24,21 @@ public class CalendarEntry
 		this.description = new SimpleStringProperty (description);
 		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 		this.time = new SimpleObjectProperty<LocalTime>(LocalTime.now());
+		this.isAlarm = new SimpleObjectProperty<Boolean>(false);
+		this.alarmTimeBeforeEntry = new SimpleObjectProperty<LocalTime>(null);
+		this.alarmStringBeforeEntry = new SimpleStringProperty(null);
 	}
 	
-	public CalendarEntry(String title, String venue, String description, LocalDate date, LocalTime time) 
+	public CalendarEntry(String title, String venue, String description, LocalDate date, LocalTime time, Boolean isAlarm, LocalTime alarmTimeBeforeEntry, String alarmStringBeforeEntry) 
 	{
 		this.title = new SimpleStringProperty (title);
 		this.venue = new SimpleStringProperty (venue);
 		this.description = new SimpleStringProperty (description);
 		this.date = new SimpleObjectProperty<LocalDate>(date);
 		this.time = new SimpleObjectProperty<LocalTime>(time);
+		this.isAlarm = new SimpleObjectProperty<Boolean>(isAlarm);
+		this.alarmTimeBeforeEntry = new SimpleObjectProperty<LocalTime>(alarmTimeBeforeEntry);
+		this.alarmStringBeforeEntry = new SimpleStringProperty(alarmStringBeforeEntry);
 	}
 	
 	public CalendarEntry(String title, String venue, String description, String date)
@@ -40,6 +49,9 @@ public class CalendarEntry
 		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.from(DateConverter.parse(date)));
 		//temporary
 		this.time = new SimpleObjectProperty<LocalTime>(LocalTime.now());
+		this.isAlarm = new SimpleObjectProperty<Boolean>(false);
+		this.alarmTimeBeforeEntry = new SimpleObjectProperty<LocalTime>(null);
+		this.alarmStringBeforeEntry = new SimpleStringProperty(null);
 	}
 	
 
@@ -116,7 +128,6 @@ public class CalendarEntry
 	
     public void setTime(LocalTime time) 
     {
-    	System.out.println("aaaaaa");
         this.time.set(time);
     }
 
@@ -124,5 +135,51 @@ public class CalendarEntry
     {
         return time;
     }
+
+	
+	public Boolean getIsAlarm()
+	{
+		return isAlarm.get();
+	}	
+	
+    public void setIsAlarm(Boolean isAlarm) 
+    {
+        this.isAlarm.set(isAlarm);
+    }
+
+    public ObjectProperty<Boolean> isAlarmProperty() 
+    {
+        return isAlarm;
+    }
+
+	public LocalTime getAlarmTimeBeforeEntry()
+	{
+		return alarmTimeBeforeEntry.get();
+	}
+	
+	public void setAlarmTimeBeforeEntry(LocalTime alarmTimeBeforeEntry)
+	{
+		this.alarmTimeBeforeEntry.set(alarmTimeBeforeEntry);
+	}
+	
+	public ObjectProperty<LocalTime> alarmTimeBeforeEntryProperty()
+	{
+		return alarmTimeBeforeEntry;
+	}
+	
+	public String getAlarmStringBeforeEntry()
+	{
+		return alarmStringBeforeEntry.get();
+	}
+	
+	public void setAlarmStringBeforeEntry(String alarmStringBeforeEntry)
+	{
+		this.alarmStringBeforeEntry.set(alarmStringBeforeEntry);
+	}
+	
+	public StringProperty alarmStringBeforeEntryProperty()
+	{
+		return alarmStringBeforeEntry;
+	}
 }
 
