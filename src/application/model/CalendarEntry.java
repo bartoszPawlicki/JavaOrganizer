@@ -10,7 +10,6 @@ public class CalendarEntry
     private final StringProperty venue;
     private final StringProperty description;
     private final ObjectProperty<LocalDate> date;
-    
 
 	public CalendarEntry(String title, String venue, String description) 
 	{

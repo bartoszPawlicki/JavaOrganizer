@@ -72,7 +72,7 @@ public class DataBaseConnection
 				+ "VALUES (\"" +  callendarEntry.getTitle()
 				+ "\", \"" + callendarEntry.getVenue()
 				+ "\", \"" + callendarEntry.getDescription()
-				+ "\", \"" + date
+				+ "\", \"" + localDate.toString()
 				+ "\")";
 		
 		

@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import application.model.CalendarEntry;
+import application.util.CalendarEntryConverter;
 import application.util.DataBaseConnection;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -135,5 +136,19 @@ public class RootLayoutController implements Initializable
 		alert.setTitle("Database");
 		alert.setHeaderText("Data successfully loaded from database");
 		alert.showAndWait();
+	}
+	
+	public void convertToOutlook_onAction()
+	{	
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("mojplik.ics"))))
+		{
+			bw.write(CalendarEntryConverter.ConvertToiCalendarFormat(mainApp.getCallendarEntriesObservableList()));
+		}
+		catch (IOException io)
+		{
+			System.out.println(io.getMessage());
+		}
+		
+		System.out.println("aaaaaaa");
 	}
 }

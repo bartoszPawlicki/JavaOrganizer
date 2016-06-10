@@ -2,12 +2,16 @@ package application;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.model.CalendarEntry;
 import application.util.DateConverter;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +24,8 @@ import jfxtras.scene.control.CalendarPicker;
 public class MainViewController implements Initializable
 {
 	private MainApp mainApp;
+	
+	//CalendarEntry
 	@FXML
 	private Button saveButton;
 	@FXML
@@ -33,19 +39,26 @@ public class MainViewController implements Initializable
 	@FXML
 	private TextArea textAreaDescription;
 	@FXML
-	private ComboBox<String> comboboxFiltre;
-	private ObservableList<String> listComboboxItems;
-	@FXML
 	private ComboBox<String> comboboxAlarms;
 	private ObservableList<String> listComboboxAlarmItems;
+	private HashMap<String,LocalTime> hashMapcomboboxAlarms;
+	@FXML
+	private CheckBox checkboxAlarm;
+	@FXML
+	private Button confrimAddingNewEventButton;
+	
+	//ListView
 	@FXML
 	private Button addNewEventButton;
 	@FXML
-	private Button confrimAddingNewEventButton;
-	@FXML
-	private CalendarPicker calendarPicker;
+	private ComboBox<String> comboboxFiltre;
+	private ObservableList<String> listComboboxItems;
 	@FXML
 	private ListView<CalendarEntry> listView;
+	
+	//Calendar
+	@FXML
+	private CalendarPicker calendarPicker;
 	
 	public void setMainApp(MainApp mainApp) 
 	{
@@ -53,23 +66,48 @@ public class MainViewController implements Initializable
         listView.setItems(mainApp.getCallendarEntriesObservableList());
     }
 	
+	class CheckboxAlarmListener implements ChangeListener<Boolean> 
+	{
+
+		@Override
+		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+		{
+			comboboxAlarms.setDisable(!newValue);
+		}
+	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
-	{		
-		listComboboxAlarmItems = FXCollections.observableArrayList();
-		listComboboxAlarmItems.add("Without reminder");
-		listComboboxAlarmItems.add("5 min");
-		listComboboxAlarmItems.add("10 min");
-		listComboboxAlarmItems.add("15 min");
-		listComboboxAlarmItems.add("30 min");
-		listComboboxAlarmItems.add("60 min");
-		listComboboxAlarmItems.add("2 hours");
-		listComboboxAlarmItems.add("3 hours");
-		listComboboxAlarmItems.add("6 hours");
-		listComboboxAlarmItems.add("12 hours");
-		listComboboxAlarmItems.add("24 hours");
-		comboboxAlarms.setItems(listComboboxAlarmItems);
+	{
+		//Alarm
+		{
+			listComboboxAlarmItems = FXCollections.observableArrayList();
+			listComboboxAlarmItems.add("5 min before");
+			listComboboxAlarmItems.add("10 min before");
+			listComboboxAlarmItems.add("15 min before");
+			listComboboxAlarmItems.add("30 min before");
+			listComboboxAlarmItems.add("60 min before");
+			listComboboxAlarmItems.add("2 hours before");
+			listComboboxAlarmItems.add("3 hours before");
+			listComboboxAlarmItems.add("6 hours before");
+			listComboboxAlarmItems.add("12 hours before");
+			listComboboxAlarmItems.add("24 hours before");
+			
+			hashMapcomboboxAlarms = new HashMap<String,LocalTime>();
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(0), LocalTime.of(0, 5));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(1), LocalTime.of(0, 10));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(2), LocalTime.of(0, 15));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(3), LocalTime.of(0, 30));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(4), LocalTime.of(1, 0));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(5), LocalTime.of(2, 0));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(6), LocalTime.of(3, 0));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(7), LocalTime.of(6, 0));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(8), LocalTime.of(12, 0));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(9), LocalTime.of(23, 59));
+			
+			comboboxAlarms.setItems(listComboboxAlarmItems);
+			checkboxAlarm.selectedProperty().addListener(new CheckboxAlarmListener());
+		}
 		
 		listComboboxItems = FXCollections.observableArrayList();
 		listComboboxItems.add("All events");
@@ -113,7 +151,7 @@ public class MainViewController implements Initializable
             }
         }
     }
-	
+		
 	public void changeButtonVisibilityOnSave()
 	{
 		textFieldTitle.setEditable(false);
@@ -122,6 +160,7 @@ public class MainViewController implements Initializable
 		saveButton.setVisible(false);
 		deleteButton.setVisible(false);
 		editButton.setVisible(true);
+		checkboxAlarm.setDisable(true);
 	}
 	
 	public void saveButton_onAction()
@@ -142,6 +181,7 @@ public class MainViewController implements Initializable
 		saveButton.setVisible(true);
 		deleteButton.setVisible(true);
 		editButton.setVisible(false);
+		checkboxAlarm.setDisable(false);
 	}
 	
 	public void deleteButton_onAction()
@@ -289,5 +329,10 @@ public class MainViewController implements Initializable
 		listComboboxItems.add(DateConverter.format(date));
 		filterEvents("Other day", date);
 		comboboxFiltre.getSelectionModel().select(4);
+	}
+	
+	public void comboboxAlarms_onAction()
+	{
+		System.out.println(hashMapcomboboxAlarms.get(comboboxAlarms.getSelectionModel().getSelectedItem()));
 	}
 }
