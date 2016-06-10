@@ -7,16 +7,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import application.model.CalendarEntry;
 import application.util.CalendarEntryConverter;
 import application.util.DataBaseConnection;
+import application.util.DateConverter;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,6 +42,9 @@ public class RootLayoutController implements Initializable
 	
 	@FXML
 	private MenuItem menuItemFileLoadFromXml;
+	
+	@FXML
+	private MenuItem menuItemDeletOlderThan;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
@@ -150,5 +158,33 @@ public class RootLayoutController implements Initializable
 		}
 		
 		System.out.println("aaaaaaa");
+	}
+	
+	public void menuItemDeleteOlderThan_onAction()
+	{
+		TextInputDialog dialog = new TextInputDialog("DD.MM.YYYY");
+		dialog.setTitle("Delete calendar entreis");
+		dialog.setHeaderText("Delete entries older than");
+		dialog.setContentText("Please specify date");
+		
+		// Traditional way to get the response value.
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent())
+		{
+			System.out.println(result.get());
+			LocalDate date = DateConverter.parse(result.get());
+			
+			ObservableList<CalendarEntry> tempList = FXCollections.observableArrayList();
+			tempList.setAll(mainApp.getCallendarEntriesObservableList());
+			
+			for(CalendarEntry item : tempList)
+			{
+				if(item.getDate().isBefore(date))
+					mainApp.getCallendarEntriesObservableList().remove(item);
+					
+				else System.out.println(item.getDate() + "   " + date);
+			}
+		}
+
 	}
 }

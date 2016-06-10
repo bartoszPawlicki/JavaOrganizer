@@ -24,7 +24,7 @@
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#convertToOutlook_onAction" text="Convert to Outlook" />
-                  <MenuItem mnemonicParsing="false" text="Delete older than ..." />
+                  <MenuItem fx:id="menuItemDeletOlderThan" mnemonicParsing="false" onAction="#menuItemDeleteOlderThan_onAction" text="Delete older than ..." />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Settings">

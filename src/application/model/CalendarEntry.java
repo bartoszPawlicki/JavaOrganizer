@@ -35,8 +35,6 @@ public class CalendarEntry
 		this.date = new SimpleObjectProperty<LocalDate>(LocalDate.from(DateConverter.parse(date)));
 	}
 	
-	
-	
 	@Override
 	public String toString()
 	{

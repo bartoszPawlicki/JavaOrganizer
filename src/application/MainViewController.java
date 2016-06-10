@@ -55,6 +55,11 @@ public class MainViewController implements Initializable
 	@FXML
 	private ListView<CalendarEntry> listView;
 	
+	public ListView<CalendarEntry> getListView()
+	{
+		return listView;
+	}
+
 	//Calendar
 	@FXML
 	private CalendarPicker calendarPicker;
@@ -124,8 +129,8 @@ public class MainViewController implements Initializable
 //	            }
 //		);
 		
-//		listView.getSelectionModel().selectedItemProperty().addListener(
-//	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
+		listView.getSelectionModel().selectedItemProperty().addListener(
+	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
 		
 		calendarPicker.calendarProperty().addListener((observable) -> {
 			calendarPickerDayChosen_onAction();
@@ -133,23 +138,23 @@ public class MainViewController implements Initializable
 		
 	}
 	
-	static class TextFieldCell extends ListCell<CalendarEntry> {
-        @Override
-        public void updateItem(CalendarEntry item, boolean empty) {
-            super.updateItem(item, empty);
-            //Label field = new Label();
-            if (item != null) {
-                //field.setText(item.getTitle());
-                setText(item.getTitle());
-                System.out.println("List View Update" + item.getTitle());
-                
-               // setGraphic(field);
-            }
-            else {
-            	setText("");
-            }
-        }
-    }
+//	static class TextFieldCell extends ListCell<CalendarEntry> {
+//        @Override
+//        public void updateItem(CalendarEntry item, boolean empty) {
+//            super.updateItem(item, empty);
+//            //Label field = new Label();
+//            if (item != null) {
+//                //field.setText(item.getTitle());
+//                setText(item.getTitle());
+//                System.out.println("List View Update" + item.getTitle());
+//                
+//               // setGraphic(field);
+//            }
+//            else {
+//            	setText("");
+//            }
+//        }
+//    }
 		
 	public void changeButtonVisibilityOnSave()
 	{
