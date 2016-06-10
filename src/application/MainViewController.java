@@ -7,7 +7,6 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import application.model.CalendarEntry;
 import application.util.DateConverter;
 import javafx.beans.value.ChangeListener;
@@ -116,17 +115,17 @@ public class MainViewController implements Initializable
 		listComboboxItems.add("Today");
 		comboboxFiltre.setItems(listComboboxItems);
 		
-		listView.setCellFactory(new Callback<ListView<CalendarEntry>, 
-	            ListCell<CalendarEntry>>() {
-	                @Override 
-	                public ListCell<CalendarEntry> call(ListView<CalendarEntry> listView) {
-	                    return new TextFieldCell();
-	                }
-	            }
-		);
+//		listView.setCellFactory(new Callback<ListView<CalendarEntry>, 
+//	            ListCell<CalendarEntry>>() {
+//	                @Override 
+//	                public ListCell<CalendarEntry> call(ListView<CalendarEntry> listView) {
+//	                    return new TextFieldCell();
+//	                }
+//	            }
+//		);
 		
-		listView.getSelectionModel().selectedItemProperty().addListener(
-	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
+//		listView.getSelectionModel().selectedItemProperty().addListener(
+//	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
 		
 		calendarPicker.calendarProperty().addListener((observable) -> {
 			calendarPickerDayChosen_onAction();
@@ -267,7 +266,7 @@ public class MainViewController implements Initializable
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now().minusMonths(1)))
+				if(item.getDate().isAfter(LocalDate.now().plusMonths(1)));
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
 			}
 			break;
@@ -277,7 +276,7 @@ public class MainViewController implements Initializable
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now().minusWeeks(1)))
+				if(item.getDate().isAfter(LocalDate.now().plusWeeks(1)))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
 			}
 			break;
@@ -287,7 +286,7 @@ public class MainViewController implements Initializable
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now().minusDays(1)))
+				if(item.getDate().isAfter(LocalDate.now().plusDays(1)))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);
 			}
 			break;
