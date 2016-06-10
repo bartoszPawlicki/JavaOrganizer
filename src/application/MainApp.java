@@ -17,7 +17,7 @@ public class MainApp extends Application
 {
     private BorderPane rootLayout;
     private Stage primaryStage;
-    
+
 //    Callback<CalendarEntry, Observable[]> extractor = new Callback<CalendarEntry, Observable[]>() {
 //
 //        @Override

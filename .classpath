@@ -6,8 +6,5 @@
 	<classpathentry kind="lib" path="jfxtras-labs-samples-8.0-r5-SNAPSHOT-shadow.jar"/>
 	<classpathentry kind="lib" path="mysql-connector-java-5.1.39-bin.jar"/>
 	<classpathentry kind="lib" path="xstream-1.4.9.jar"/>
-	<classpathentry kind="lib" path="D:/userData/Bartek/Moje Dokumenty/Studia/Programowanie Komponentowe/workspace2/JavaProject/jfxtras-labs-samples-8.0-r5-SNAPSHOT-shadow.jar"/>
-	<classpathentry kind="lib" path="D:/userData/Bartek/Moje Dokumenty/Studia/Programowanie Komponentowe/workspace2/JavaProject/mysql-connector-java-5.1.39-bin.jar"/>
-	<classpathentry kind="lib" path="D:/userData/Bartek/Moje Dokumenty/Studia/Programowanie Komponentowe/workspace2/JavaProject/xstream-1.4.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

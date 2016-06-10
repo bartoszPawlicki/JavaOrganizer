@@ -167,7 +167,6 @@ public class RootLayoutController implements Initializable
 		dialog.setHeaderText("Delete entries older than");
 		dialog.setContentText("Please specify date");
 		
-		// Traditional way to get the response value.
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent())
 		{
