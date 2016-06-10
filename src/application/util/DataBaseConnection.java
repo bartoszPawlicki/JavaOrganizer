@@ -75,8 +75,6 @@ public class DataBaseConnection
 				+ "\", \"" + localDate.toString()
 				+ "\")";
 		
-		
-		
         try (Connection connection = DriverManager.getConnection(URLConncetion)) 
         {
                 Class.forName("com.mysql.jdbc.Driver");

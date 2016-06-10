@@ -18,8 +18,8 @@ public class MainApp extends Application
     private BorderPane rootLayout;
     private Stage primaryStage;
     
-    Callback<CalendarEntry, Observable[]> extractor = new Callback<CalendarEntry, Observable[]>() {
-
+    Callback<CalendarEntry, Observable[]> extractor = new Callback<CalendarEntry, Observable[]>() 
+    {
         @Override
         public Observable[] call(CalendarEntry c) {
             return new Observable[] {c.titleProperty(), c.venueProperty(), c.descriptionProperty()};

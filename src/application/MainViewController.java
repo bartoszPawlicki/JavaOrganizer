@@ -136,10 +136,12 @@ public class MainViewController implements Initializable
 	
 	static class TextFieldCell extends ListCell<CalendarEntry> {
         @Override
-        public void updateItem(CalendarEntry item, boolean empty) {
+        public void updateItem(CalendarEntry item, boolean empty) 
+        {
             super.updateItem(item, empty);
             //Label field = new Label();
-            if (item != null) {
+            if (item != null) 
+            {
                 //field.setText(item.getTitle());
                 setText(item.getTitle());
                 System.out.println("List View Update" + item.getTitle());
