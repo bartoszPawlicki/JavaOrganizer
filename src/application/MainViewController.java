@@ -4,11 +4,14 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import application.model.CalendarEntry;
 import application.util.DateConverter;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,6 +22,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Callback;
 import jfxtras.scene.control.CalendarPicker;
+import jfxtras.scene.control.CalendarTextField;
+import jfxtras.scene.control.CalendarTimeTextField;
 
 public class MainViewController implements Initializable
 {
@@ -45,6 +50,8 @@ public class MainViewController implements Initializable
 	private CheckBox checkboxAlarm;
 	@FXML
 	private Button confrimAddingNewEventButton;
+	@FXML 
+	private CalendarTimeTextField calendarTextFieldEntryTime;
 	
 	//ListView
 	@FXML
@@ -72,6 +79,16 @@ public class MainViewController implements Initializable
 		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
 		{
 			comboboxAlarms.setDisable(!newValue);
+		}
+	}
+	
+	class CalendarTextFieldEntryTimeListener implements InvalidationListener
+	{
+		@Override
+		public void invalidated(Observable observable)
+		{
+			System.out.println(calendarTextFieldEntryTime.getCalendar().getTime());
+			
 		}
 	}
 	
@@ -115,43 +132,17 @@ public class MainViewController implements Initializable
 		listComboboxItems.add("Today");
 		comboboxFiltre.setItems(listComboboxItems);
 		
-//		listView.setCellFactory(new Callback<ListView<CalendarEntry>, 
-//	            ListCell<CalendarEntry>>() {
-//	                @Override 
-//	                public ListCell<CalendarEntry> call(ListView<CalendarEntry> listView) {
-//	                    return new TextFieldCell();
-//	                }
-//	            }
-//		);
+		calendarTextFieldEntryTime.calendarProperty().addListener(new CalendarTextFieldEntryTimeListener());
 		
-//		listView.getSelectionModel().selectedItemProperty().addListener(
-//	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
+		calendarTextFieldEntryTime.dateFormatProperty().addListener(new CalendarTextFieldEntryTimeListener());
+		
+		listView.getSelectionModel().selectedItemProperty().addListener(
+	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));
 		
 		calendarPicker.calendarProperty().addListener((observable) -> {
 			calendarPickerDayChosen_onAction();
 		        });
-		
 	}
-	
-	static class TextFieldCell extends ListCell<CalendarEntry> {
-        @Override
-        public void updateItem(CalendarEntry item, boolean empty) 
-        {
-            super.updateItem(item, empty);
-            //Label field = new Label();
-            if (item != null) 
-            {
-                //field.setText(item.getTitle());
-                setText(item.getTitle());
-                System.out.println("List View Update" + item.getTitle());
-                
-               // setGraphic(field);
-            }
-            else {
-            	setText("");
-            }
-        }
-    }
 		
 	public void changeButtonVisibilityOnSave()
 	{
@@ -162,6 +153,7 @@ public class MainViewController implements Initializable
 		deleteButton.setVisible(false);
 		editButton.setVisible(true);
 		checkboxAlarm.setDisable(true);
+		calendarTextFieldEntryTime.setDisable(true);
 	}
 	
 	public void saveButton_onAction()
@@ -171,6 +163,13 @@ public class MainViewController implements Initializable
 		listView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
 		listView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
 		listView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
+//		listView.getSelectionModel().getSelectedItem().setDate(calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+		listView.getSelectionModel().getSelectedItem().setTime(
+				LocalTime.parse(
+						calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY) 
+						+ ":" + 
+						calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE)));
 	}
 	
 	public void editButton_onAction()
@@ -183,6 +182,7 @@ public class MainViewController implements Initializable
 		deleteButton.setVisible(true);
 		editButton.setVisible(false);
 		checkboxAlarm.setDisable(false);
+		calendarTextFieldEntryTime.setDisable(false);
 	}
 	
 	public void deleteButton_onAction()
@@ -202,15 +202,17 @@ public class MainViewController implements Initializable
 		listView.refresh();
 	}
 	
-	public void tableColumnItem_onAction(CalendarEntry callendarEntry)
+	public void tableColumnItem_onAction(CalendarEntry calendarEntry)
 	{
 		System.out.println("Item in table chosen");
-		if (callendarEntry != null) 
+		if (calendarEntry != null) 
 		{
-	        textFieldTitle.setText(callendarEntry.getTitle());
-	        textFieldVenue.setText(callendarEntry.getVenue());
-	        textAreaDescription.setText(callendarEntry.getDescription());
-	        
+	        textFieldTitle.setText(calendarEntry.getTitle());
+	        textFieldVenue.setText(calendarEntry.getVenue());
+	        textAreaDescription.setText(calendarEntry.getDescription());
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.set(0, 0, 0, calendarEntry.getTime().getHour(), calendarEntry.getTime().getMinute());
+	        calendarTextFieldEntryTime.setCalendar(calendar);
 	        //TODO Selecting date in calendar when selecting entry in listView
 	        
 	        //Date date = Date.from(callendarEntry.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -247,11 +249,18 @@ public class MainViewController implements Initializable
 		else
 		{
 			mainApp.getCallendarEntriesObservableList().add(
-					new CalendarEntry(textFieldTitle.getText(), textFieldVenue.getText(), textAreaDescription.getText()));
+					new CalendarEntry(textFieldTitle.getText(), 
+							textFieldVenue.getText(), 
+							textAreaDescription.getText(), 
+							calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+							LocalTime.parse(
+									calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY) 
+									+ ":" + 
+									calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE))
+							));
 			changeButtonVisibilityOnSave();
 			confrimAddingNewEventButton.setVisible(false);
 		}
-		
 	}
 	
 	public void filterEvents (String filter, LocalDate date)

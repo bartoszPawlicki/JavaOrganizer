@@ -39,7 +39,8 @@ public class DataBaseConnection
                 			resultSet.getString(2),
                 			resultSet.getString(3),
                 			resultSet.getString(4), 
-                			resultSet.getDate(5).toLocalDate());
+                			resultSet.getDate(5).toLocalDate(),
+                			resultSet.getTime(6).toLocalTime());
                 	callendarEntryArrayList.add(tmpCallendarEntry);
                 }
         }
