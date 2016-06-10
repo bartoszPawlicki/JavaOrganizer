@@ -62,6 +62,11 @@ public class MainViewController implements Initializable
 	@FXML
 	private ListView<CalendarEntry> listView;
 	
+	public ListView<CalendarEntry> getListView()
+	{
+		return listView;
+	}
+
 	//Calendar
 	@FXML
 	private CalendarPicker calendarPicker;
@@ -133,8 +138,6 @@ public class MainViewController implements Initializable
 		comboboxFiltre.setItems(listComboboxItems);
 		
 		calendarTextFieldEntryTime.calendarProperty().addListener(new CalendarTextFieldEntryTimeListener());
-		
-		calendarTextFieldEntryTime.dateFormatProperty().addListener(new CalendarTextFieldEntryTimeListener());
 		
 		listView.getSelectionModel().selectedItemProperty().addListener(
 	           (observable, oldValue, newValue) -> tableColumnItem_onAction(newValue));

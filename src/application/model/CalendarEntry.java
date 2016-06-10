@@ -42,6 +42,13 @@ public class CalendarEntry
 		this.time = new SimpleObjectProperty<LocalTime>(LocalTime.now());
 	}
 	
+
+	@Override
+	public String toString()
+	{
+		return getTitle();
+	}
+
 	public String getTitle() 
 	{
         return title.get();
