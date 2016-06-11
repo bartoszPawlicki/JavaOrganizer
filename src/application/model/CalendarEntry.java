@@ -54,6 +54,18 @@ public class CalendarEntry
 		this.alarmStringBeforeEntry = new SimpleStringProperty(null);
 	}
 	
+	public CalendarEntry(SerializationCalendarEntry serialziationCalendarEntry)
+	{
+		this.title = new SimpleStringProperty(serialziationCalendarEntry.getTitle());
+    	this.venue = new SimpleStringProperty(serialziationCalendarEntry.getVenue());
+    	this.description = new SimpleStringProperty(serialziationCalendarEntry.getDescription());
+    	this.date = new SimpleObjectProperty<LocalDate>(serialziationCalendarEntry.getDate());
+    	this.time = new SimpleObjectProperty<LocalTime>(serialziationCalendarEntry.getTime());
+    	this.isAlarm = new SimpleObjectProperty<Boolean>(serialziationCalendarEntry.getIsAlarm());
+    	this.alarmTimeBeforeEntry = new SimpleObjectProperty<LocalTime>(serialziationCalendarEntry.getAlarmTimeBeforeEntry());
+    	this.alarmStringBeforeEntry = new SimpleStringProperty(serialziationCalendarEntry.getAlarmStringBeforeEntry());
+	}
+	
 
 	@Override
 	public String toString()

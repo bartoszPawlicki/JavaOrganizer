@@ -17,6 +17,7 @@ import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import application.model.CalendarEntry;
+import application.model.SerializationCalendarEntry;
 import application.util.CalendarEntryConverter;
 import application.util.DataBaseConnection;
 import application.util.DateConverter;
@@ -63,7 +64,7 @@ public class RootLayoutController implements Initializable
 		Platform.exit();
 	}
 	
-	public void menuItemFileSaveToXml_onAction() // TODO refactor serializing
+	public void menuItemFileSaveToXml_onAction() 
 	{
 		XStream xstream = new XStream(new DomDriver());
 		File file = new File("CallendarEntries.txt");
@@ -71,10 +72,10 @@ public class RootLayoutController implements Initializable
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file)))
 		{
 			file.createNewFile();
-			List<CalendarEntry> list = new ArrayList<CalendarEntry>();
-			for (CalendarEntry callendarEntry : mainApp.getCallendarEntriesObservableList())
+			ObservableList<SerializationCalendarEntry> list = FXCollections.observableArrayList();
+			for (CalendarEntry calendarEntry : mainApp.getCallendarEntriesObservableList())
 			{
-				list.add(callendarEntry);
+				list.add(new SerializationCalendarEntry(calendarEntry));
 			}
 			String temp2 = xstream.toXML(list);
 			bufferedWriter.write(temp2);
@@ -108,8 +109,12 @@ public class RootLayoutController implements Initializable
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file)))
 		{
 			@SuppressWarnings("unchecked")
-			ObservableList<CalendarEntry> tempList = (ObservableList<CalendarEntry>)xstream.fromXML(file);
-			mainApp.getCallendarEntriesObservableList().setAll(tempList);
+			ObservableList<SerializationCalendarEntry> tempList = (ObservableList<SerializationCalendarEntry>)xstream.fromXML(file);
+			mainApp.getCallendarEntriesObservableList().clear();
+			for (SerializationCalendarEntry calendarEntry : tempList)
+			{
+				mainApp.getCallendarEntriesObservableList().add(new CalendarEntry(calendarEntry));
+			}
 		}
 		
 		catch (IOException e)
