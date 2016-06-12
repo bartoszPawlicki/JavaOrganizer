@@ -364,6 +364,7 @@ public class MainViewController implements Initializable
 	
 	public void calendarPickerDayChosen_onAction()
 	{
+
 		if(calendarPicker.getCalendar() != null)
 		{
 			LocalDate date = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
