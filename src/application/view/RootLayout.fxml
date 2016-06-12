@@ -27,15 +27,6 @@
                   <MenuItem fx:id="menuItemDeletOlderThan" mnemonicParsing="false" onAction="#menuItemDeleteOlderThan_onAction" text="Delete older than ..." />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Settings">
-               <items>
-                  <Menu mnemonicParsing="false" text="Theme">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Dark" />
-                    </items>
-                  </Menu>
-               </items>
-            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem fx:id="menuItemHelpAbout" mnemonicParsing="false" text="About"  onAction="#menuItemHelpAbout_onAction"/>

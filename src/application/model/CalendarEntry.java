@@ -66,7 +66,6 @@ public class CalendarEntry
     	this.alarmStringBeforeEntry = new SimpleStringProperty(serialziationCalendarEntry.getAlarmStringBeforeEntry());
 	}
 	
-
 	@Override
 	public String toString()
 	{

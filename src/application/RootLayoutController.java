@@ -200,7 +200,7 @@ public class RootLayoutController implements Initializable
 		alert.setHeaderText("Java Organizer created by £ukasz Zimoñ and Bartosz Pawlicki ");
 		alert.setContentText("Fantastic orgranizer which capabilities are infinite! Add, edit, delete events"
 				+ "\nconnect with database, load your events from xml file or open them in Outlook via our converter!"
-				+ "\n\nApplication uses: javafx libraries, jfxtras for graphical calendar, Azure database and XStream for serialization");
+				+ "\n\nApplication uses: javafx libraries, jfxtras for graphical calendar, Azure MySql database with JDBC Driver for MySQL and XStream for serialization");
 		alert.showAndWait();
 	}
 }
