@@ -342,13 +342,10 @@ public class MainViewController implements Initializable
 	
 	public void calendarPickerDayChosen_onAction()
 	{
-		System.out.println(calendarPicker.getCalendar().getTime());
-		System.out.println(DateConverter.format(calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-		
 		LocalDate date = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		if(listComboboxItems.size()>4)
 		{
-			listComboboxItems.remove(4); 
+			listComboboxItems.remove(4); // te 4, to bazowe filtry, filtr na dany dzieñ mo¿e byæ tylko 1 
 		}
 				
 		listComboboxItems.add(DateConverter.format(date));
