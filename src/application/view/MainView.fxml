@@ -43,7 +43,7 @@
                         <Button fx:id="confrimAddingNewEventButton" layoutX="75.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#confirmAddingNewEventButton_onAction" text="Confirm adding new event" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="75.0" />
                         <Label layoutX="43.0" layoutY="109.0" text="Hour" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="43.0" />
                         <CalendarTimeTextField fx:id="calendarTextFieldEntryTime" disable="true" layoutX="75.0" layoutY="118.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="75.0" />
-                        <ComboBox fx:id="comboboxAlarms" disable="true" layoutX="305.0" layoutY="161.0" onAction="#comboboxAlarms_onAction" prefHeight="25.0" prefWidth="102.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="305.0" />
+                        <ComboBox fx:id="comboboxAlarms" disable="true" layoutX="305.0" layoutY="161.0" prefHeight="25.0" prefWidth="102.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="305.0" />
                         <CheckBox fx:id="checkboxAlarm" disable="true" layoutX="230.0" layoutY="165.0" mnemonicParsing="false" text="Alarm" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="230.0" />
                      </children></AnchorPane>
               </items>
