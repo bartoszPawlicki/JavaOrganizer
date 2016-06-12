@@ -148,7 +148,6 @@ public class CalendarEntry
         return time;
     }
 
-	
 	public Boolean getIsAlarm()
 	{
 		return isAlarm.get();
@@ -194,4 +193,3 @@ public class CalendarEntry
 		return alarmStringBeforeEntry;
 	}
 }
-

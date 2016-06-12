@@ -16,7 +16,7 @@
    <children>
       <SplitPane dividerPositions="0.5" layoutX="-170.0" layoutY="-118.0" prefHeight="42.0" prefWidth="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane maxWidth="300.0" minWidth="150.0">
+          <AnchorPane fx:id="anchorPaneEntryList" maxWidth="300.0" minWidth="150.0">
                <children>
                   <ComboBox fx:id="comboboxFiltre" layoutX="23.0" layoutY="6.0" onAction="#comboBoxFiltre_onAction" promptText="All events" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                   <Button fx:id="addNewEventButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#addNewEventButton_onAction" text="Add new event " AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />

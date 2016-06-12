@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import jfxtras.scene.control.CalendarPicker;
 import jfxtras.scene.control.CalendarTimeTextField;
 
@@ -52,6 +53,8 @@ public class MainViewController implements Initializable
 	private CalendarTimeTextField calendarTextFieldEntryTime;
 	
 	//ListView
+	@FXML
+	private AnchorPane anchorPaneEntryList;
 	@FXML
 	private Button addNewEventButton;
 	@FXML
@@ -176,6 +179,8 @@ public class MainViewController implements Initializable
 		listView.getSelectionModel().getSelectedItem().setIsAlarm(checkboxAlarm.selectedProperty().getValue());
 		listView.getSelectionModel().getSelectedItem().setAlarmTimeBeforeEntry(hashMapcomboboxAlarms.get(comboboxAlarms.getSelectionModel().getSelectedItem()));
 		listView.getSelectionModel().getSelectedItem().setAlarmStringBeforeEntry(comboboxAlarms.getSelectionModel().getSelectedItem());
+		listView.setDisable(false);
+		anchorPaneEntryList.setDisable(false);
 	}
 	
 	public void editButton_onAction()
@@ -191,10 +196,13 @@ public class MainViewController implements Initializable
 		
 		if(checkboxAlarm.selectedProperty().getValue())
 			comboboxAlarms.setDisable(false);
+		
+		anchorPaneEntryList.setDisable(true);
 	}
 	
 	public void deleteButton_onAction()
 	{
+		listView.setDisable(false);
 		editButton.setVisible(false);
 		clearEntryDescriptionModule();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -208,7 +216,7 @@ public class MainViewController implements Initializable
 			mainApp.getCallendarEntriesObservableList().remove(listView.getSelectionModel().getSelectedItem());
 		} 
 		changeButtonVisibilityOnSave();
-		listView.refresh();
+		anchorPaneEntryList.setDisable(false);
 	}
 	
 	public void tableColumnItem_onAction(CalendarEntry calendarEntry)
@@ -250,6 +258,7 @@ public class MainViewController implements Initializable
 		calendarTextFieldEntryTime.setDisable(false);
 		if(checkboxAlarm.selectedProperty().getValue())
 			comboboxAlarms.setDisable(false);
+		anchorPaneEntryList.setDisable(true);
 	}
 	
 	public void confirmAddingNewEventButton_onAction()
@@ -298,6 +307,7 @@ public class MainViewController implements Initializable
 
 			changeButtonVisibilityOnSave();
 			confrimAddingNewEventButton.setVisible(false);
+			anchorPaneEntryList.setDisable(false);
 		}
 		filterEvents("Other day", calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 	}
