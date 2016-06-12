@@ -47,6 +47,9 @@ public class RootLayoutController implements Initializable
 	@FXML
 	private MenuItem menuItemDeletOlderThan;
 	
+	@FXML
+	private MenuItem menuItemHelpAbout;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
@@ -190,5 +193,16 @@ public class RootLayoutController implements Initializable
 			}
 		}
 
+	}
+	
+	public void menuItemHelpAbout_onAction()
+	{
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("About Java Organizer");
+		alert.setHeaderText("Java Organizer created by £ukasz Zimoñ and Bartosz Pawlicki ");
+		alert.setContentText("Fantastic orgranizer which capabilities are infinite! Add, edit, delete events"
+				+ "\nconnect with database, load your events from xml file or open them in Outlook via our converter!"
+				+ "\n\nApplication uses: javafx libraries, jfxtras for graphical calendar, Azure database and XStream for serialization");
+		alert.showAndWait();
 	}
 }
