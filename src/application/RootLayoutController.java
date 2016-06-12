@@ -144,6 +144,7 @@ public class RootLayoutController implements Initializable
 	{
 		DataBaseConnection dataBaseConncetion = new DataBaseConnection();
 		mainApp.getCallendarEntriesObservableList().setAll(dataBaseConncetion.LoadCallendarEntries());
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Database");
 		alert.setHeaderText("Data loaded from database");

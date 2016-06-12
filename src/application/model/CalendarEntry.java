@@ -16,7 +16,8 @@ public class CalendarEntry
     private final ObjectProperty<Boolean> isAlarm;
     private final ObjectProperty<LocalTime> alarmTimeBeforeEntry;
     private final StringProperty alarmStringBeforeEntry;
-
+   
+    
 	public CalendarEntry(String title, String venue, String description) 
 	{
 		this.title = new SimpleStringProperty (title);

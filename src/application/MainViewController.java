@@ -299,6 +299,7 @@ public class MainViewController implements Initializable
 			changeButtonVisibilityOnSave();
 			confrimAddingNewEventButton.setVisible(false);
 		}
+		filterEvents("Other day", calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 	}
 	
 	public void filterEvents (String filter, LocalDate date)
@@ -315,7 +316,7 @@ public class MainViewController implements Initializable
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now().plusMonths(1)));
+				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusMonths(1)));
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
 			}
 			break;
@@ -325,7 +326,7 @@ public class MainViewController implements Initializable
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now().plusWeeks(1)))
+				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusWeeks(1)));
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
 			}
 			break;
@@ -335,7 +336,7 @@ public class MainViewController implements Initializable
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now().plusDays(1)))
+				if(item.getDate().isEqual(LocalDate.now()))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);
 			}
 			break;
