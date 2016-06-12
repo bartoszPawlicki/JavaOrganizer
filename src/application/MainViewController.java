@@ -20,9 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.util.Callback;
 import jfxtras.scene.control.CalendarPicker;
-import jfxtras.scene.control.CalendarTextField;
 import jfxtras.scene.control.CalendarTimeTextField;
 
 public class MainViewController implements Initializable
@@ -85,6 +83,8 @@ public class MainViewController implements Initializable
 		{
 
 			comboboxAlarms.setDisable(!newValue);
+			if(comboboxAlarms.getSelectionModel().getSelectedIndex() < 0)
+				comboboxAlarms.getSelectionModel().select(0);
 		}
 	}
 	
@@ -93,7 +93,6 @@ public class MainViewController implements Initializable
 		@Override
 		public void invalidated(Observable observable)
 		{
-			System.out.println(calendarTextFieldEntryTime.getCalendar().getTime());
 			
 		}
 	}
@@ -113,7 +112,7 @@ public class MainViewController implements Initializable
 			listComboboxAlarmItems.add("3 hours before");
 			listComboboxAlarmItems.add("6 hours before");
 			listComboboxAlarmItems.add("12 hours before");
-			listComboboxAlarmItems.add("24 hours before");
+			listComboboxAlarmItems.add("20 hours before");
 			
 			hashMapcomboboxAlarms = new HashMap<String,LocalTime>();
 			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(0), LocalTime.of(0, 5));
@@ -125,7 +124,7 @@ public class MainViewController implements Initializable
 			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(6), LocalTime.of(3, 0));
 			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(7), LocalTime.of(6, 0));
 			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(8), LocalTime.of(12, 0));
-			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(9), LocalTime.of(23, 59));
+			hashMapcomboboxAlarms.put(listComboboxAlarmItems.get(9), LocalTime.of(20, 0));
 			
 			comboboxAlarms.setItems(listComboboxAlarmItems);
 			checkboxAlarm.selectedProperty().addListener(new CheckboxAlarmListener());
@@ -146,6 +145,8 @@ public class MainViewController implements Initializable
 		calendarPicker.calendarProperty().addListener((observable) -> {
 			calendarPickerDayChosen_onAction();
 		        });
+		
+		editButton.setVisible(false);
 	}
 		
 	public void changeButtonVisibilityOnSave()
@@ -158,18 +159,15 @@ public class MainViewController implements Initializable
 		editButton.setVisible(true);
 		checkboxAlarm.setDisable(true);
 		calendarTextFieldEntryTime.setDisable(true);
-			comboboxAlarms.setDisable(true);
+		comboboxAlarms.setDisable(true);
 	}
 	
 	public void saveButton_onAction()
 	{
-		System.out.println("SaveButton action");
 		changeButtonVisibilityOnSave();
 		listView.getSelectionModel().getSelectedItem().setTitle(textFieldTitle.getText());
 		listView.getSelectionModel().getSelectedItem().setVenue(textFieldVenue.getText());
 		listView.getSelectionModel().getSelectedItem().setDescription(textAreaDescription.getText());
-//		listView.getSelectionModel().getSelectedItem().setDate(calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-
 		listView.getSelectionModel().getSelectedItem().setTime(
 				LocalTime.of(
 						calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY),
@@ -182,7 +180,6 @@ public class MainViewController implements Initializable
 	
 	public void editButton_onAction()
 	{
-		System.out.println("EditButton action");
 		textFieldTitle.setEditable(true);
 		textFieldVenue.setEditable(true);
 		textAreaDescription.setEditable(true);
@@ -191,12 +188,15 @@ public class MainViewController implements Initializable
 		editButton.setVisible(false);
 		checkboxAlarm.setDisable(false);
 		calendarTextFieldEntryTime.setDisable(false);
+		
+		if(checkboxAlarm.selectedProperty().getValue())
 			comboboxAlarms.setDisable(false);
 	}
 	
 	public void deleteButton_onAction()
 	{
-		System.out.println("DeleteButton action");
+		editButton.setVisible(false);
+		clearEntryDescriptionModule();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Delete entry");
 		alert.setHeaderText("You are about to delete callendar entry: " + listView.getSelectionModel().getSelectedItem().getTitle() );
@@ -213,7 +213,7 @@ public class MainViewController implements Initializable
 	
 	public void tableColumnItem_onAction(CalendarEntry calendarEntry)
 	{
-		System.out.println("Item in table chosen");
+		editButton.setVisible(true);
 		if (calendarEntry != null) 
 		{
 	        textFieldTitle.setText(calendarEntry.getTitle());
@@ -237,7 +237,7 @@ public class MainViewController implements Initializable
 	
 	public void addNewEventButton_onAction()
 	{
-		System.out.println("AddNewEventButtonClicked");
+		clearEntryDescriptionModule();
 		tableColumnItem_onAction(null);
 		textFieldTitle.setEditable(true);
 		textFieldVenue.setEditable(true);
@@ -246,33 +246,56 @@ public class MainViewController implements Initializable
 		deleteButton.setVisible(false);
 		editButton.setVisible(false);
 		confrimAddingNewEventButton.setVisible(true);
+		checkboxAlarm.setDisable(false);
+		calendarTextFieldEntryTime.setDisable(false);
+		if(checkboxAlarm.selectedProperty().getValue())
+			comboboxAlarms.setDisable(false);
 	}
 	
 	public void confirmAddingNewEventButton_onAction()
-	{
-		if (textFieldTitle.getText().length()<1 || textFieldVenue.getText().length()<1 )
+	{		
+		if (textFieldTitle.getText().length()<1 || textFieldVenue.getText().length()<1 || calendarPicker.getCalendar() == null || calendarTextFieldEntryTime.getCalendar() == null)
 		{
 			Alert alert = new Alert(AlertType.WARNING);
 	        alert.initOwner(mainApp.getPrimaryStage());
 	        alert.setTitle("Adding new event failed!");
-	        alert.setHeaderText("No title and/or venue specified");
-	        alert.setContentText("Please specify at least title and venue to add new event");
+	        alert.setHeaderText("No title and/or venue and/or time and/or date specified");
+	        alert.setContentText("Please specify at least title,venue,time and date to add new event");
 	        alert.showAndWait();
 		}
 		else
 		{
-			mainApp.getCallendarEntriesObservableList().add(
-					new CalendarEntry(textFieldTitle.getText(), 
-							textFieldVenue.getText(), 
-							textAreaDescription.getText(), 
-							calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-							LocalTime.of(
-									calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY),
-									calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE)),
-							checkboxAlarm.selectedProperty().getValue(),
-							hashMapcomboboxAlarms.get(comboboxAlarms.getSelectionModel().getSelectedItem()),
-							comboboxAlarms.getSelectionModel().getSelectedItem()
-							));
+			if(checkboxAlarm.selectedProperty().getValue())
+			{
+				mainApp.getCallendarEntriesObservableList().add(
+						new CalendarEntry(textFieldTitle.getText(), 
+								textFieldVenue.getText(), 
+								textAreaDescription.getText(), 
+								calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+								LocalTime.of(
+										calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY),
+										calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE)),
+								checkboxAlarm.selectedProperty().getValue(),
+								hashMapcomboboxAlarms.get(comboboxAlarms.getSelectionModel().getSelectedItem()),
+								comboboxAlarms.getSelectionModel().getSelectedItem()
+								));
+			}
+			else
+			{
+				mainApp.getCallendarEntriesObservableList().add(
+						new CalendarEntry(textFieldTitle.getText(), 
+								textFieldVenue.getText(), 
+								textAreaDescription.getText(), 
+								calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+								LocalTime.of(
+										calendarTextFieldEntryTime.getCalendar().get(Calendar.HOUR_OF_DAY),
+										calendarTextFieldEntryTime.getCalendar().get(Calendar.MINUTE)),
+								checkboxAlarm.selectedProperty().getValue(),
+								null,
+								null
+								));
+			}
+
 			changeButtonVisibilityOnSave();
 			confrimAddingNewEventButton.setVisible(false);
 		}
@@ -323,7 +346,6 @@ public class MainViewController implements Initializable
 			{
 				if(item.getDate().isEqual(date))
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);
-				else System.out.println(item.getDate() + "   " + date);
 			}
 			break;
 			
@@ -342,22 +364,26 @@ public class MainViewController implements Initializable
 	
 	public void calendarPickerDayChosen_onAction()
 	{
-		System.out.println(calendarPicker.getCalendar().getTime());
-		System.out.println(DateConverter.format(calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-		
-		LocalDate date = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		if(listComboboxItems.size()>4)
+		if(calendarPicker.getCalendar() != null)
 		{
-			listComboboxItems.remove(4); 
+			LocalDate date = calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			if(listComboboxItems.size()>4)
+			{
+				listComboboxItems.remove(4); 
+			}
+					
+			listComboboxItems.add(DateConverter.format(date));
+			filterEvents("Other day", date);
+			comboboxFiltre.getSelectionModel().select(4);
 		}
-				
-		listComboboxItems.add(DateConverter.format(date));
-		filterEvents("Other day", date);
-		comboboxFiltre.getSelectionModel().select(4);
 	}
 	
-	public void comboboxAlarms_onAction()
+	private void clearEntryDescriptionModule()
 	{
-		System.out.println(hashMapcomboboxAlarms.get(comboboxAlarms.getSelectionModel().getSelectedItem()));
+		textFieldTitle.setText("");
+		textFieldVenue.setText("");
+		textAreaDescription.setText("");
+		calendarTextFieldEntryTime.setCalendar(null);
+		checkboxAlarm.selectedProperty().setValue(false);
 	}
 }
