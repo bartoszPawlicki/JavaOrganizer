@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import application.model.CalendarEntry;
 import application.util.DateConverter;
+import application.util.FilterEvents;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -309,68 +310,13 @@ public class MainViewController implements Initializable
 			confrimAddingNewEventButton.setVisible(false);
 			anchorPaneEntryList.setDisable(false);
 		}
-		filterEvents("Other day", calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-	}
-	
-	public void filterEvents (String filter, LocalDate date)
-	{
-		switch (filter)
-		{
-		case "All events":
-		
-			mainApp.getFilteredCallendarEntreisObservableList().setAll(mainApp.getCallendarEntriesObservableList());
-			break;
-			
-		case "This month":
-			
-			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
-			{
-				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusMonths(1)));
-					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
-			}
-			break;
-			
-		case "This week":
-			
-			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
-			{
-				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusWeeks(1)));
-					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
-			}
-			break;
-			
-		case "Today":
-			
-			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
-			{
-				if(item.getDate().isEqual(LocalDate.now()))
-					mainApp.getFilteredCallendarEntreisObservableList().add(item);
-			}
-			break;
-			
-		case "Other day":
-			mainApp.getFilteredCallendarEntreisObservableList().clear();
-			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
-			{
-				if(item.getDate().isEqual(date))
-					mainApp.getFilteredCallendarEntreisObservableList().add(item);
-			}
-			break;
-			
-		default:
-			break;
-			
-		}
-		listView.setItems(mainApp.getFilteredCallendarEntreisObservableList());
+		FilterEvents.filterEvents("Other day", calendarPicker.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), mainApp);
 	}
 	
 	public void comboBoxFiltre_onAction()
 	{
 		String chosenFiltre = comboboxFiltre.getSelectionModel().getSelectedItem();
-		filterEvents(chosenFiltre, DateConverter.parse(chosenFiltre));
+		FilterEvents.filterEvents(chosenFiltre, DateConverter.parse(chosenFiltre), mainApp);
 	}
 	
 	public void calendarPickerDayChosen_onAction()
@@ -385,7 +331,7 @@ public class MainViewController implements Initializable
 			}
 					
 			listComboboxItems.add(DateConverter.format(date));
-			filterEvents("Other day", date);
+			FilterEvents.filterEvents("Other day", date, mainApp);
 			comboboxFiltre.getSelectionModel().select(4);
 		}
 	}

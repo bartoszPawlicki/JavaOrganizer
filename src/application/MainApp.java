@@ -24,8 +24,14 @@ public class MainApp extends Application
     private BorderPane rootLayout;
     private Stage primaryStage;
     private Timer timer;
+    private MainViewController controller;
     
-    class AlarmTimerTask extends TimerTask
+    public MainViewController getController()
+	{
+		return controller;
+	}
+
+	class AlarmTimerTask extends TimerTask
     {
     	private Alert alert;
     	
@@ -130,7 +136,7 @@ public class MainApp extends Application
 
             rootLayout.setCenter(personOverview);
             
-            MainViewController controller = loader.getController();
+            controller = loader.getController();
             controller.setMainApp(this);
             
             

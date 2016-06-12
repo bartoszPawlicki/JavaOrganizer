@@ -18,6 +18,7 @@ import application.model.SerializationCalendarEntry;
 import application.util.CalendarEntryConverter;
 import application.util.DataBaseConnection;
 import application.util.DateConverter;
+import application.util.FilterEvents;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -129,6 +130,8 @@ public class RootLayoutController implements Initializable
 		{
 			System.out.println(e.getMessage());
 		}
+		FilterEvents.filterEvents("All Events", LocalDate.now(), mainApp);
+		
 	}
 	
 	public void menuItemFileSaveToDataBase_onAction()
@@ -149,6 +152,7 @@ public class RootLayoutController implements Initializable
 		alert.setTitle("Database");
 		alert.setHeaderText("Data loaded from database");
 		alert.showAndWait();
+		FilterEvents.filterEvents("All Events", LocalDate.now(), mainApp);
 	}
 	
 	public void convertToOutlook_onAction()
