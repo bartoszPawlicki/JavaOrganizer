@@ -21,8 +21,11 @@ public class FilterEvents
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusMonths(1)));
+				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusMonths(1)))
+				{
 					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
+				}
+					
 			}
 			break;
 			
@@ -31,8 +34,12 @@ public class FilterEvents
 			mainApp.getFilteredCallendarEntreisObservableList().clear();
 			for(CalendarEntry item : mainApp.getCallendarEntriesObservableList())
 			{
-				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusWeeks(1)));
-					mainApp.getFilteredCallendarEntreisObservableList().add(item);	
+				if(item.getDate().isAfter(LocalDate.now()) && item.getDate().isBefore(LocalDate.now().plusWeeks(1)))
+				{
+					mainApp.getFilteredCallendarEntreisObservableList().add(item);
+					//System.out.println("Data wydarzenia: " + item.getDate().toString() + " Dzisiaj: " + LocalDate.now() + " Za 7 dni: " + LocalDate.now().plusDays(7));
+				}
+				
 			}
 			break;
 			
@@ -60,5 +67,7 @@ public class FilterEvents
 			
 		}
 		mainApp.getController().getListView().setItems(mainApp.getFilteredCallendarEntreisObservableList());
+		
+		
 	}
 }

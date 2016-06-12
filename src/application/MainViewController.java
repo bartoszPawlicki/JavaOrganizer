@@ -60,6 +60,11 @@ public class MainViewController implements Initializable
 	private Button addNewEventButton;
 	@FXML
 	private ComboBox<String> comboboxFiltre;
+	public ComboBox<String> getComboboxFiltre()
+	{
+		return comboboxFiltre;
+	}
+
 	private ObservableList<String> listComboboxItems;
 	@FXML
 	private ListView<CalendarEntry> listView;
@@ -76,7 +81,7 @@ public class MainViewController implements Initializable
 	public void setMainApp(MainApp mainApp) 
 	{
         this.mainApp = mainApp;
-        listView.setItems(mainApp.getCallendarEntriesObservableList());
+        listView.setItems(mainApp.getFilteredCallendarEntreisObservableList());
     }
 	
 	class CheckboxAlarmListener implements ChangeListener<Boolean> 
@@ -214,6 +219,7 @@ public class MainViewController implements Initializable
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
 		{
+			mainApp.getFilteredCallendarEntreisObservableList().remove(listView.getSelectionModel().getSelectedItem());
 			mainApp.getCallendarEntriesObservableList().remove(listView.getSelectionModel().getSelectedItem());
 		} 
 		changeButtonVisibilityOnSave();

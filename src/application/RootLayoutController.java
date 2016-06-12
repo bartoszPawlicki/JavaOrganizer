@@ -130,7 +130,8 @@ public class RootLayoutController implements Initializable
 		{
 			System.out.println(e.getMessage());
 		}
-		FilterEvents.filterEvents("All Events", LocalDate.now(), mainApp);
+		FilterEvents.filterEvents("All events", null, mainApp);
+		mainApp.getController().getListView().refresh();
 		
 	}
 	
@@ -152,7 +153,8 @@ public class RootLayoutController implements Initializable
 		alert.setTitle("Database");
 		alert.setHeaderText("Data loaded from database");
 		alert.showAndWait();
-		FilterEvents.filterEvents("All Events", LocalDate.now(), mainApp);
+		
+		FilterEvents.filterEvents("All events", null, mainApp);
 	}
 	
 	public void convertToOutlook_onAction()
